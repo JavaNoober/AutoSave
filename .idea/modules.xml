@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AutoSave.iml" filepath="$PROJECT_DIR$/AutoSave.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xqauto-api/xqauto-api.iml" filepath="$PROJECT_DIR$/xqauto-api/xqauto-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xqauto-processor/xqauto-processor.iml" filepath="$PROJECT_DIR$/xqauto-processor/xqauto-processor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xqauto-savehelper/xqauto-savehelper.iml" filepath="$PROJECT_DIR$/xqauto-savehelper/xqauto-savehelper.iml" />
+    </modules>
+  </component>
+</project>
