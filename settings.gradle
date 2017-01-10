@@ -1,1 +1,1 @@
-include ':app', ':xqauto-api', ':xqauto-processor', ':xqauto-savehelper'
+include ':xqauto-api', ':xqauto-processor', ':xqauto-savehelper', ':sample'

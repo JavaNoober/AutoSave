@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,12 @@ public class SaveHelper {
 
 	public static void save(Activity activity, Bundle outState){
 		ISaveInstanceStateHelper saveInstanceStateHelper = findSaveHelper(activity);
-		saveInstanceStateHelper.save(outState,findSaveCache(activity));
+		saveInstanceStateHelper.save(outState, activity);
+	}
+
+	private static void putInToCache(Activity activity){
+		Class activityClass = activity.getClass();
+		Field[] fields = activityClass.getFields();
 	}
 
 	@Nullable
@@ -44,26 +50,5 @@ public class SaveHelper {
 			}
 		}
 		return saveInstanceStateHelper;
-	}
-
-	@Nullable
-	private static Object findSaveCache(Activity activity) {
-		String clazz = activity.getClass().getName();
-		Object cacheObject = objectCache.get(clazz);
-		if(cacheObject == null){
-			try {
-				Class<?> findClass = Class.forName(clazz + CACHE_END);
-				cacheObject = findClass.newInstance();
-				objectCache.put(clazz,cacheObject);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				throw new RuntimeException(String.format(" not find %s.class",clazz + CACHE_END));
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		}
-		return cacheObject;
 	}
 }

@@ -6,6 +6,6 @@ import android.os.Bundle;
 
 public interface ISaveInstanceStateHelper {
 
-	void save(Bundle outState, Object clazz);
+	void save(Bundle outState, Activity activity);
 	void recover(Bundle savedInstanceState, Activity activity);
 }
