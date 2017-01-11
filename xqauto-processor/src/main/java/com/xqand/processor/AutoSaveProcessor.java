@@ -26,13 +26,12 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)
-public class MyProcessor extends AbstractProcessor{
+public class AutoSaveProcessor extends AbstractProcessor{
 
 	private Types typeUtils;
 	private Elements elementUtils;
 	private Filer filer;
 	private Messager messager;
-
 
 	//存储添加了注解的Activity
 	private Map<String, HelperClass> mHelperClassMap = new HashMap<>();
@@ -63,7 +62,6 @@ public class MyProcessor extends AbstractProcessor{
 		for (Element annotatedElement: roundEnvironment.getElementsAnnotatedWith(NeedSave.class)) {
 			getHelperClass(annotatedElement);
 		}
-
 		for(HelperClass helperClass : mHelperClassMap.values()){
 			try {
 				if(helperClass.generateCode() != null){

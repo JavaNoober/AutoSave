@@ -28,7 +28,7 @@ ext {
     userOrg = 'xqand'
     groupId = 'com.xqand'
     uploadName = 'AutoSave'
-    publishVersion = '1.0.0'
+    publishVersion = '1.1.0'
     desc = 'A framework can automatically generate OnSaveInstanceState code'
     website = 'https://github.com/xiaoqiAndroid/AutoSave'
 }

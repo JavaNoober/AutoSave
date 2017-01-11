@@ -1,5 +1,6 @@
 package com.xqand.helper;
 
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.xqand.processor.HelperConfig;
 import com.xqand.utils.TypeUtil;
 import com.squareup.javapoet.ClassName;
@@ -8,7 +9,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.annotation.processing.Messager;
@@ -38,44 +38,44 @@ public class HelperClass {
 
 	public JavaFile generateCode(){
 		try {
-//			ClassName cacheClass =  ClassName.get(getPackageName(), getCacheClassName());
 			TypeName cacheClass =  ClassName.get(encloseElement.asType());
-			MethodSpec.Builder saveMethodBuilder = MethodSpec.methodBuilder("save")
+			MethodSpec.Builder saveMethodBuilder;
+			MethodSpec.Builder recoverMethodBuilder;
+			saveMethodBuilder = MethodSpec.methodBuilder("save")
 					.addModifiers(Modifier.PUBLIC)
 					.returns(void.class)
 					.addParameter(TypeUtil.BUNDLE, "outState")
-					.addParameter(TypeUtil.ACTITVITY, "activity")
-					.addAnnotation(Override.class)
-					.addStatement("$T recoverActivity = ($T)activity",  cacheClass, cacheClass);
+					.addParameter(cacheClass, "save")
+					.addAnnotation(Override.class);
 
-			MethodSpec.Builder recoverMethodBuilder = MethodSpec.methodBuilder("recover")
+			recoverMethodBuilder = MethodSpec.methodBuilder("recover")
 					.addModifiers(Modifier.PUBLIC)
 					.returns(void.class)
 					.addParameter(TypeUtil.BUNDLE, "savedInstanceState")
-					.addParameter(TypeUtil.ACTITVITY, "activity")
+					.addParameter(cacheClass, "recover")
 					.addAnnotation(Override.class)
-					.beginControlFlow("if(savedInstanceState != null)")
-					.addStatement("$T recoverActivity = ($T)activity", cacheClass, cacheClass);
+					.beginControlFlow("if(savedInstanceState != null)");
 
 			for (HelperSavedValues value : elementArrayList) {
 				Name fieldName = value.getSimpleName();
 				String fieldType = value.getFieldType().toString();
-				String type = getFieldType(fieldType);
+				String type = HelperConfig.getFieldType(fieldType);
+				//only support public field
+				if(!value.isPublic()){
+					continue;
+				}
 				if(!type.equals("unKnow")){
 					addMethodStatement(saveMethodBuilder,recoverMethodBuilder, type, fieldName);
 				}else {
-//					Class c = Class.forName(fieldType);
-//					Class[] interfaces = c.getInterfaces();
-//					for (Class inter : interfaces) {
-//						saveMethodBuilder.addStatement("//$N", inter.getName());
-//					}
-					if( value.getFieldType() instanceof Serializable){
-						saveMethodBuilder.addStatement("outState.putSerializable($S,recoverActivity.$S)", fieldName.toString
-								().toUpperCase(),fieldName);
-						recoverMethodBuilder.addStatement("recoverActivity.$N = savedInstanceState.getSerializable($S)",
+					if(value.isParcelable()){
+						saveMethodBuilder.addStatement("outState.putParcelable($S,save.$N)", fieldName.toString().toUpperCase(),fieldName);
+						recoverMethodBuilder.addStatement("recover.$N = savedInstanceState.getParcelable($S)",
 								fieldName, fieldName.toString().toUpperCase());
 					}else {
-						saveMethodBuilder.addStatement("//$S", fieldType);
+						saveMethodBuilder.addStatement("outState.putSerializable($S,save.$N)", fieldName.toString
+								().toUpperCase(),fieldName);
+						recoverMethodBuilder.addStatement("recover.$N = ($T)savedInstanceState.getSerializable($S)",
+								fieldName, ClassName.get(value.getFieldType()),fieldName.toString().toUpperCase());
 					}
 				}
 			}
@@ -86,16 +86,17 @@ public class HelperClass {
 			String className = encloseElement.getSimpleName().toString() + HelperConfig.HELP_CLASS;
 			TypeSpec cacheClassTypeSpec = TypeSpec.classBuilder(className)
 					.addModifiers(Modifier.PUBLIC)
-					.addSuperinterface(TypeUtil.IHELPER)
+					.addSuperinterface(ParameterizedTypeName.get(TypeUtil.IHELPER, cacheClass))
 					.addMethod(saveMethod)
 					.addMethod(recoverMethod)
 					.build();
+
 			JavaFile javaFile = JavaFile.builder(getPackageName(), cacheClassTypeSpec).build();
 			return javaFile;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	private String getPackageName() {
@@ -119,12 +120,12 @@ public class HelperClass {
 	}
 
 	private void addSaveMethodStatement(MethodSpec.Builder saveMethodBuilder, String str, Name fieldName){
-		saveMethodBuilder.addStatement(String.format("outState.put%s($S,recoverActivity.$N)",upperFirstWord(str)),
+		saveMethodBuilder.addStatement(String.format("outState.put%s($S,save.$N)",upperFirstWord(str)),
 				fieldName.toString().toUpperCase(),fieldName);
 	}
 
 	private void addRecoverMethodStatement(MethodSpec.Builder recoverMethodBuilder, String str, Name fieldName){
-		recoverMethodBuilder.addStatement(String.format("recoverActivity.$N = savedInstanceState.get%s($S)",upperFirstWord(str)),
+		recoverMethodBuilder.addStatement(String.format("recover.$N = savedInstanceState.get%s($S)",upperFirstWord(str)),
 				fieldName, fieldName.toString().toUpperCase());
 	}
 
@@ -133,28 +134,5 @@ public class HelperClass {
 		addRecoverMethodStatement(recoverMethodBuilder,str,fieldName);
 	}
 
-	private String getFieldType(String fieldType){
-		String type;
-		if(fieldType.equals("java.lang.String")){
-			type = "String";
-		}else if(fieldType.equals("int") || fieldType.equals("java.lang.Integer")){
-			type = "Int";
-		}else if(fieldType.equals("short") || fieldType.equals("java.lang.Short")){
-			type = "Short";
-		}else if(fieldType.equals("double") || fieldType.equals("java.lang.Double")){
-			type = "Double";
-		}else if(fieldType.equals("float") || fieldType.equals("java.lang.Float")){
-			type = "Float";
-		}else if(fieldType.equals("boolean") || fieldType.equals("java.lang.Boolean")){
-			type = "Boolean";
-		}else if(fieldType.equals("char")){
-			type = "Char";
-		}else if(fieldType.equals("char[]")){
-			type = "CharArray";
-		}else {
-			type = "unKnow";
-		}
-		return type;
-	}
 
 }
