@@ -1,7 +1,6 @@
 package com.xqand.processor;
 
 
-import com.google.auto.service.AutoService;
 import com.xqand.helper.HelperClass;
 import com.xqand.helper.HelperSavedValues;
 import com.processor.NeedSave;
@@ -25,7 +24,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
-@AutoService(Processor.class)
+//@AutoService(Processor.class)
 public class AutoSaveProcessor extends AbstractProcessor{
 
 	private Types typeUtils;

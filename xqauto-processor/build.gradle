@@ -1,12 +1,24 @@
 apply plugin: 'java'
+apply plugin: 'bintray-release'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.auto:auto-common:0.6'
-    compile 'com.google.auto.service:auto-service:1.0-rc2'
+//    compile 'com.google.auto:auto-common:0.6'
+//    compile 'com.google.auto.service:auto-service:1.0-rc2'
     compile 'com.squareup:javapoet:1.8.0'
     compile project(':xqauto-api')
 }
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
+
+//添加
+publish {
+    artifactId = 'xqauto-processor'
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    uploadName = rootProject.uploadName
+    publishVersion = rootProject.publishVersion
+    desc = rootProject.description
+    website = rootProject.website
+}
