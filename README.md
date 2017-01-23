@@ -1,7 +1,9 @@
 # AutoSave
 A framework can automatically generate OnSaveInstanceState code
 ##how to use:
-    project gradle:
+     
+    
+    project gradle:
      dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         ....
