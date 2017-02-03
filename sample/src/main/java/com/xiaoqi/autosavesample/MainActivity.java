@@ -3,14 +3,13 @@ package com.xiaoqi.autosavesample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.processor.NeedSave;
+import com.xqand.api.NeedSave;
 import com.xqand.savehelper.SaveHelper;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-	@NeedSave
-	public int a;
+
 	@NeedSave
 	public String test;
 	@NeedSave
@@ -37,12 +36,19 @@ public class MainActivity extends AppCompatActivity {
 	public int[] sasa;
 	@NeedSave
 	public Bundle bundle;
+	@NeedSave
+	public int a;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		initData();
 		SaveHelper.bind(this,savedInstanceState);
+	}
+
+	private void initData() {
+		//TODO
 	}
 
 	@Override

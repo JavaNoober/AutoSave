@@ -1,4 +1,4 @@
-package com.processor;
+package com.xqand.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

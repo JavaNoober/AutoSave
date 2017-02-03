@@ -36,7 +36,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
-    compile project(':xqauto-api')
-    apt project(':xqauto-processor')
-    compile project(':xqauto-savehelper')
+    compile 'com.xqand:xqauto-api:1.1.3'
+    apt 'com.xqand:xqauto-processor:1.1.3'
+    compile 'com.xqand:xqauto-savehelper:1.1.3'
 }

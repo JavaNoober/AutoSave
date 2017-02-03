@@ -7,11 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.processor.NeedSave;
-import com.xqand.savehelper.SaveHelper;
-
-import java.util.ArrayList;
-
 public class BaseFragment extends Fragment {
 
 
