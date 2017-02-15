@@ -25,10 +25,10 @@ task clean(type: Delete) {
 
 //添加
 ext {
-    userOrg = 'xqand'
-    groupId = 'com.xqand'
+    userOrg = 'xqandroid'
+    groupId = 'com.xiaoqi'
     uploadName = 'AutoSave'
-    publishVersion = '1.1.1'
+    publishVersion = '1.1.0'
     desc = 'A framework can automatically generate OnSaveInstanceState code'
     website = 'https://github.com/xiaoqiAndroid/AutoSave'
 }
