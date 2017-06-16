@@ -1,5 +1,7 @@
 # AutoSave
 A framework can automatically generate OnSaveInstanceState code
+
+使用方法介绍 ：http://blog.csdn.net/qq_25412055/article/details/54355935
 ##how to use:
      
     
