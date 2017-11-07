@@ -1,5 +1,7 @@
 # AutoSave
 A framework can automatically generate OnSaveInstanceState code
+
+使用方法介绍 ：http://blog.csdn.net/qq_25412055/article/details/54355935
 ##how to use:
      
     
@@ -14,12 +16,12 @@ A framework can automatically generate OnSaveInstanceState code
     
     repositories {
         maven {
-            url 'https://xqand.bintray.com/maven/' 
+            url 'https://dl.bintray.com/xqandroid/maven/' 
         }
     }
     
     dependencies {
-        compile 'com.xqand:xqauto-api:1.1.3'
-        apt 'com.xqand:xqauto-processor:1.1.3'
-        compile 'com.xqand:xqauto-savehelper:1.1.3'
+        compile 'com.xiaoqi:xqauto-api:1.1.0'
+        apt 'com.xiaoqi:xqauto-processor:1.1.0'
+        compile 'com.xiaoqi:xqauto-savehelper:1.1.0'
     }
