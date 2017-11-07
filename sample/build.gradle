@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
-apply plugin: 'android-apt'
+//apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 14
@@ -24,7 +24,7 @@ android {
 
 repositories {
     maven {
-        url 'https://xqand.bintray.com/maven/'
+        url 'https://dl.bintray.com/xqandroid/maven/'
     }
 }
 
@@ -34,9 +34,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:appcompat-v7:+'
     testCompile 'junit:junit:4.12'
-    compile 'com.xqand:xqauto-api:1.1.3'
-    apt 'com.xqand:xqauto-processor:1.1.3'
-    compile 'com.xqand:xqauto-savehelper:1.1.3'
+    compile 'com.xiaoqi:xqauto-api:1.1.0'
+    annotationProcessor 'com.xiaoqi:xqauto-processor:1.1.0'
+    compile 'com.xiaoqi:xqauto-savehelper:1.1.0'
 }

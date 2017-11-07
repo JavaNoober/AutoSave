@@ -21,7 +21,7 @@ A framework can automatically generate OnSaveInstanceState code
     }
     
     dependencies {
-        compile 'com.xiaoqi:xqauto-api:1.1.0'
-        apt 'com.xiaoqi:xqauto-processor:1.1.0'
-        compile 'com.xiaoqi:xqauto-savehelper:1.1.0'
+        compile 'com.xiaoqi:xqauto-api:1.1.1'
+        apt 'com.xiaoqi:xqauto-processor:1.1.1'
+        compile 'com.xiaoqi:xqauto-savehelper:1.1.1'
     }

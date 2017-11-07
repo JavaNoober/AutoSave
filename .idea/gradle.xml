@@ -5,10 +5,11 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="C:\AndroidDevelop\Android Studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/sample" />
             <option value="$PROJECT_DIR$/xqauto-api" />
             <option value="$PROJECT_DIR$/xqauto-processor" />
             <option value="$PROJECT_DIR$/xqauto-savehelper" />
