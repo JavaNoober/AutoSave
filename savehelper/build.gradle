@@ -33,6 +33,7 @@ dependencies {
     })
     provided 'com.android.support:appcompat-v7:+'
     testImplementation 'junit:junit:4.12'
+    compile project(':savehelper-api')
 }
 
 //添加

@@ -21,12 +21,6 @@ android {
     }
 }
 
-repositories {
-    maven {
-        url 'https://dl.bintray.com/xqandroid/maven/'
-    }
-}
-
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -35,7 +29,6 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:+'
     testImplementation 'junit:junit:4.12'
-    implementation project(':savehelper')
-    implementation project(':savehelper-api')
-    annotationProcessor project(':savehelper-processor')
+    annotationProcessor 'com.noober.savehelper:processor:1.0.1'
+    implementation 'com.noober.savehelper:savehelper:1.0.1'
 }

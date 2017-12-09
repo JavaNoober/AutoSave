@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class SaveHelper {
 	private static Map<String,ISaveInstanceStateHelper> helperCache = new HashMap<>();
+
 	private final static String HELPER_END = "_SaveStateHelper";
 
 	public static <T> void bind(T recover, Bundle savedInstanceState){

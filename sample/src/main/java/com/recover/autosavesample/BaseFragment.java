@@ -1,4 +1,4 @@
-package com.xiaoqi.autosavesample;
+package com.recover.autosavesample;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
