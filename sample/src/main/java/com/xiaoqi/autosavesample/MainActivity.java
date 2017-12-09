@@ -3,8 +3,9 @@ package com.xiaoqi.autosavesample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.xqand.api.NeedSave;
-import com.xqand.savehelper.SaveHelper;
+
+import com.noober.api.NeedSave;
+import com.noober.savehelper.SaveHelper;
 
 import java.util.ArrayList;
 

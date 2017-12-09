@@ -10,9 +10,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/sample" />
-            <option value="$PROJECT_DIR$/xqauto-api" />
-            <option value="$PROJECT_DIR$/xqauto-processor" />
-            <option value="$PROJECT_DIR$/xqauto-savehelper" />
+            <option value="$PROJECT_DIR$/savehelper" />
+            <option value="$PROJECT_DIR$/savehelper-api" />
+            <option value="$PROJECT_DIR$/savehelper-processor" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

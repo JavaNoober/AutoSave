@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'
 
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion 9
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
@@ -19,23 +20,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-
-repositories {
-    maven {
-        url 'https://dl.bintray.com/xqandroid/maven/'
+    lintOptions {
+        abortOnError false
     }
-}
 
+}
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:+'
+    provided 'com.android.support:appcompat-v7:+'
     testImplementation 'junit:junit:4.12'
-    implementation project(':savehelper')
-    implementation project(':savehelper-api')
-    annotationProcessor project(':savehelper-processor')
+}
+
+//添加
+publish {
+    artifactId = 'savehelper'
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    uploadName = rootProject.uploadName
+    publishVersion = rootProject.publishVersion
+    desc = rootProject.description
+    website = rootProject.website
 }

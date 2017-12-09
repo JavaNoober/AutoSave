@@ -10,7 +10,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.novoda:bintray-release:0.5.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -33,11 +32,11 @@ task clean(type: Delete) {
 
 //添加
 ext {
-    userOrg = 'xqandroid'
-    groupId = 'com.xiaoqi'
-    uploadName = 'AutoSave'
-    publishVersion = '1.1.1'
-    desc = 'A framework can automatically generate OnSaveInstanceState code'
-    website = 'https://github.com/xiaoqiAndroid/AutoSave'
+    userOrg = 'noober'
+    groupId = 'com.noober.savehelper'
+    uploadName = 'AutoSaver'
+    publishVersion = '1.0.0'
+    desc = "A light weght framework can automatically generate 'OnSaveInstanceState' code"
+    website = 'https://github.com/JavaNoober/AutoSave'
 //    gradlew clean build bintrayUpload -PbintrayUser=xiaoqiandroid -PbintrayKey=xxxxxxxxxxxxxxxx -PdryRun=false
 }
