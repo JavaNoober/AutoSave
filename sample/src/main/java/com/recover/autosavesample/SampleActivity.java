@@ -1,10 +1,7 @@
 package com.recover.autosavesample;
 
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 
 import com.noober.api.NeedSave;
@@ -12,13 +9,12 @@ import com.noober.savehelper.SaveHelper;
 
 import java.util.ArrayList;
 
-public class MainFragment extends BaseFragment {
-	@NeedSave
-	public int a;
+public class SampleActivity extends AppCompatActivity {
+
 	@NeedSave
 	public String test;
 	@NeedSave
-	public boolean b;
+	private boolean b;
 	@NeedSave
 	public Boolean c;
 	@NeedSave
@@ -34,20 +30,30 @@ public class MainFragment extends BaseFragment {
 	@NeedSave
 	public char achar;
 	@NeedSave
-	private char achars[];
+	public char achars[];
+	@NeedSave
+	public int sssss[];
+	@NeedSave
+	public int[] sasa;
+	@NeedSave
+	public Bundle bundle;
+	@NeedSave
+	public int a;
 
-
-	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
-			savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		initData();
 		SaveHelper.bind(this,savedInstanceState);
-		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
+	private void initData() {
+		//TODO
+	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(Bundle outState) {
 		SaveHelper.save(this,outState);
 		super.onSaveInstanceState(outState);
 	}

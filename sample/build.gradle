@@ -1,4 +1,4 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
@@ -23,12 +23,14 @@ android {
 
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:appcompat-v7:+'
     testImplementation 'junit:junit:4.12'
-    annotationProcessor 'com.noober.savehelper:processor:1.0.1'
-    implementation 'com.noober.savehelper:savehelper:1.0.1'
+    implementation 'com.noober:savehelper:1.0.0'
+    annotationProcessor 'com.noober:processor:1.0.0'
+    implementation 'com.noober:savehelper-api:1.0.0'
 }

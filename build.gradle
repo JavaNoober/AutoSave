@@ -33,9 +33,9 @@ task clean(type: Delete) {
 //添加
 ext {
     userOrg = 'noober'
-    groupId = 'com.noober.savehelper'
+    groupId = 'com.noober'
     uploadName = 'AutoSaver'
-    publishVersion = '1.0.1'
+    publishVersion = '1.0.0'
     desc = "A light weight framework can automatically generate 'OnSaveInstanceState' code"
     website = 'https://github.com/JavaNoober/AutoSave'
 //    gradlew clean build bintrayUpload -PbintrayUser=xiaoqiandroid -PbintrayKey=xxxxxxxxxxxxxxxx -PdryRun=false
