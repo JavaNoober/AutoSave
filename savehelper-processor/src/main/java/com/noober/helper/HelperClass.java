@@ -61,7 +61,7 @@ public class HelperClass {
 				String fieldType = value.getFieldType().toString();
 				String type = HelperConfig.getFieldType(fieldType);
 				//only support public field
-				if(!value.isPublic()){
+				if(value.isPrivate()){
 					continue;
 				}
 				if(!type.equals("unKnow")){

@@ -41,4 +41,14 @@ public class HelperSavedValues {
 		}
 		return false;
 	}
+
+	public boolean isPrivate(){
+		Set<Modifier> set = ((Element)encloseElement).getModifiers();
+		for(Modifier modifier : set){
+			if(modifier.equals(Modifier.PRIVATE)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

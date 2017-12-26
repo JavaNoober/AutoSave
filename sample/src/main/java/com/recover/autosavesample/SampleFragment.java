@@ -42,7 +42,7 @@ public class SampleFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
 			savedInstanceState) {
-		SaveHelper.bind(this,savedInstanceState);
+		SaveHelper.recover(this,savedInstanceState);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 

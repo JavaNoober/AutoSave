@@ -11,7 +11,21 @@ public class SaveHelper {
 
 	private final static String HELPER_END = "_SaveStateHelper";
 
+	/**
+	 * Equate to{@link SaveHelper#recover}, it's just renamed to make it easier to understand
+	 */
+	@Deprecated
 	public static <T> void bind(T recover, Bundle savedInstanceState){
+		recover(recover, savedInstanceState);
+	}
+
+	/**
+	 * added where need to recover data
+	 *
+	 * @param recover current Activity or Fragment
+	 * @param savedInstanceState Bundle
+	 */
+	public static <T> void recover(T recover, Bundle savedInstanceState){
 		if(savedInstanceState != null){
 			ISaveInstanceStateHelper<T> saveInstanceStateHelper = findSaveHelper(recover);
 			if(saveInstanceStateHelper != null){
@@ -21,9 +35,11 @@ public class SaveHelper {
 	}
 
 	public static <T> void save(T save, Bundle outState){
-		ISaveInstanceStateHelper<T> saveInstanceStateHelper = findSaveHelper(save);
-		if(saveInstanceStateHelper != null){
-			saveInstanceStateHelper.save(outState, save);
+		if(outState != null){
+			ISaveInstanceStateHelper<T> saveInstanceStateHelper = findSaveHelper(save);
+			if(saveInstanceStateHelper != null){
+				saveInstanceStateHelper.save(outState, save);
+			}
 		}
 	}
 
@@ -39,7 +55,6 @@ public class SaveHelper {
 				helperCache.put(clazz,saveInstanceStateHelper);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				throw new RuntimeException(String.format(" not find %s.class",clazz + HELPER_END));
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

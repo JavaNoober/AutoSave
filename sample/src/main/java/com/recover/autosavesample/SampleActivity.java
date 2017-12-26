@@ -12,40 +12,40 @@ import java.util.ArrayList;
 public class SampleActivity extends AppCompatActivity {
 
 	@NeedSave
-	public String test;
+	String test;
 	@NeedSave
-	private boolean b;
+	public boolean b;
 	@NeedSave
-	public Boolean c;
+	protected Boolean c;
 	@NeedSave
-	public ArrayList<String> t;
+	private ArrayList<String> t;
 	@NeedSave
-	public Integer i;
+	Integer i;
 	@NeedSave(isParcelable = true)
-	public Example example;
+	Example example;
 	@NeedSave
-	public Float f1;
+	Float f1;
 	@NeedSave
-	public float f2;
+	float f2;
 	@NeedSave
-	public char achar;
+	char achar;
 	@NeedSave
-	public char achars[];
+	char achars[];
 	@NeedSave
-	public int sssss[];
+	int sssss[];
 	@NeedSave
-	public int[] sasa;
+	int[] sasa;
 	@NeedSave
-	public Bundle bundle;
+	Bundle bundle;
 	@NeedSave
-	public int a;
+	int a;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initData();
-		SaveHelper.bind(this,savedInstanceState);
+		SaveHelper.recover(this,savedInstanceState);
 	}
 
 	private void initData() {
