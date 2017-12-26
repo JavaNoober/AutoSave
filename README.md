@@ -1,5 +1,17 @@
 [![license](https://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/didi/VirtualAPK/blob/master/LICENSE)
-[![Release Version](https://img.shields.io/badge/release-1.0.0-red.svg)](https://bintray.com/noober/maven/AutoSaver)
+[![JCenter](https://img.shields.io/badge/JCenter-AutoSaver-green.svg?style=flat)](https://bintray.com/noober/maven/AutoSaver)
+
+
+    版本更新说明：
+    
+    1.0.0 完成基本功能;
+    1.0.1 全局变量的作用域从之前强制public改成只要非private即可;
+    1.0.1 修改 SaveHelper.bind(this, savedInstanceState)方法为SaveHelper.recover(this, savedInstanceState),只是重命名，
+          以便于理解;
+          去掉当内存被收回去调用recover方法时，却没有对应helper类会主动抛异常的情况,方便在BaseAcitviy 和 BaseFragment的
+          onSaveInstanceState 和 onRestoreInstanceState 统一添加SaveHelper.save和SaveHelper.recover方法。
+
+
 # 引入
 
 android 内存被回收是一个开发者的常见问题。当我们**跳转到一个二级界面，或者切换到后台**的时候，如果时间过长或者手机的**内存不足**，当我们再返回这个界面的时候，activity或fragment就会被内存回收。这时候虽然界面被重新执行了onCreate，但是很多变量的值却已经被置空，这样就导致了很多潜在的bug，已经很多空指针的问题。
@@ -7,8 +19,8 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 其实这种问题需要解决的话也很简单。大家知道，当Activity或者Fragment被内存回收后，我们再进入这个界面，它会自动重新进行onCreate操作，并且系统会帮助我们保存一些值。但是系统只会保存界面上的一些元素，比如textview中的文字，但是很多全局变量仍然会被置空。
 对于保存这些变量，我们可以重写**onSaveInstanceState**这个方法，在onCreate中即可恢复数据。代码如下：
     |
-    
-    public int a;
+
+    int a;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,7 +42,7 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 		outState.putInt("A", a);
 		super.onSaveInstanceState(outState);
 	}
-	
+
 通过这样的操作，便可以解决内存回收后变量a的值变为初始值0的问题。
 
 问题到这里，似乎已经可以解决内存被回收的问题了。但是随着项目的开发，一个Activity中的变量以及**代码会变得非常多**，这时候我们需要去保存某个值就会使代码变得越来越凌乱，同时不断重复的去写outState.putXX已经savedInstanceState.getXX这样的代码都是很重复的，一不小心还会去写错中间的key值。
@@ -38,9 +50,9 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 于是我写了这个很轻量级的框架，来解决这个问题。先给出引入这个框架后的代码写法：
 
     @NeedSave
-	public String test;
+	String test;
 	@NeedSave
-	private boolean b;
+	protected boolean b;
 	@NeedSave
 	public Boolean c;
 	@NeedSave
@@ -71,7 +83,7 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initData();
-		SaveHelper.bind(this,savedInstanceState);
+		SaveHelper.recover(this,savedInstanceState);
 	}
 
 	private void initData() {
@@ -83,13 +95,13 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 		SaveHelper.save(this,outState);
 		super.onSaveInstanceState(outState);
 	}
-	
+
 这里我特地写了很多的变量，但是无论这个Activity中有多少变量，我在onCreate和onSaveInstanceState代码中都只要去各写一行代码,同时给变量加一个标签标记一个即可：
 
         @NeedSave
-        SaveHelper.bind(this,savedInstanceState);
+        SaveHelper.recover(this,savedInstanceState);
         SaveHelper.save(this,outState);
-    
+
 这样就不会因为这种太多的重复的操作去导致代码逻辑的混乱,同时也避免了敲代码时因为key写错导致的错误。
 
 # 效果展示
@@ -119,24 +131,26 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 
 ## @NeedSave
 
-这是一个注解，这个注解只能使用在全局变量中，特别注意，被加上这个注解的变量必须是**public**，否则会不生效。
+这是一个注解，这个注解只能使用在全局变量中，特别注意，~~被加上这个注解的变量必须是**public**，否则会不生效~~。
+1.0.1更新为只要非private即可。
+
 当前支持保存的类型有：
 
         String
-        boolean Boolean 
+        boolean Boolean
         ArrayList
         int int[] Integer
         Parcelable
         Serializable
         float Float
         char[] char
-        Bundle 
+        Bundle
 
     注意，如果是Parcelable类型，需要特别在注解中加入	@NeedSave(isParcelable = true) 这样标记
-## SaveHelper.bind(this,savedInstanceState);
+## SaveHelper.recover(this,savedInstanceState);
 这个方法其实是恢复数据的时候去调用的。
 
-	public static <T> void bind(T recover, Bundle savedInstanceState){
+	public static <T> void recover(T recover, Bundle savedInstanceState){
 		if(savedInstanceState != null){
 			ISaveInstanceStateHelper<T> saveInstanceStateHelper = findSaveHelper(recover);
 			if(saveInstanceStateHelper != null){
@@ -144,7 +158,7 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 			}
 		}
 	}
-	
+
 savedInstanceState不会null的时候，说明就是需要内存恢复的时候，这时候就会去通过findSaveHelper方法找到一个实现类，然后去调用recover方法恢复数据。
 ## SaveHelper.save(this,outState);
 这是一个保存数据的方法，**注意**的是，这个方法必须在super.onSaveInstanceState(outState);之前调用。
@@ -155,7 +169,7 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
         			saveInstanceStateHelper.save(outState, save);
         		}
         	}
-        	
+
 它最终调用的是ISaveInstanceStateHelper实现类的save方法。
 
 ## ISaveInstanceStateHelper实现类
@@ -183,7 +197,7 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
         outState.putBundle("BUNDLE",save.bundle);
         outState.putInt("A",save.a);
       }
-    
+
       @Override
       public void recover(Bundle savedInstanceState, MainActivity recover) {
         if(savedInstanceState != null) {
@@ -203,13 +217,14 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
         }
       }
     }
-    
+
 # 总结
 看到这里大家已经猜到其实这个框架的实现原理和BufferKnife是相同的。而bufferknife的原理很多文章都有，这里就不过多介绍了。
 
 github地址：[https://github.com/JavaNoober/AutoSave](https://github.com/JavaNoober/AutoSave)
 
-引入方式,在app的gradle中加入下面依赖即可：    
+引入方式,在app的gradle中加入下面依赖即可：
+
 
     compile 'com.noober:savehelper:1.0.0'
     compile 'com.noober:savehelper-api:1.0.0'
