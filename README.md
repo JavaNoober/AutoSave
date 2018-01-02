@@ -6,11 +6,18 @@
     
     1.0.0 完成基本功能;
     1.0.1 全局变量的作用域从之前强制public改成只要非private即可;
-    1.0.1 修改 SaveHelper.bind(this, savedInstanceState)方法为SaveHelper.recover(this, savedInstanceState),只是重命名，
+    1.0.2 修改 SaveHelper.bind(this, savedInstanceState)方法为SaveHelper.recover(this, savedInstanceState),只是重命名，
           以便于理解;
           去掉当内存被收回去调用recover方法时，却没有对应helper类会主动抛异常的情况,方便在BaseAcitviy 和 BaseFragment的
           onSaveInstanceState 和 onRestoreInstanceState 统一添加SaveHelper.save和SaveHelper.recover方法。
 
+
+引入方式,在app的gradle中加入下面依赖即可：
+
+
+    compile 'com.noober:savehelper:1.0.2'
+    compile 'com.noober:savehelper-api:1.0.2'
+    annotationProcessor 'com.noober:processor:1.0.2'
 
 # 引入
 
@@ -222,11 +229,4 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
 看到这里大家已经猜到其实这个框架的实现原理和BufferKnife是相同的。而bufferknife的原理很多文章都有，这里就不过多介绍了。
 
 github地址：[https://github.com/JavaNoober/AutoSave](https://github.com/JavaNoober/AutoSave)
-
-引入方式,在app的gradle中加入下面依赖即可：
-
-
-    compile 'com.noober:savehelper:1.0.0'
-    compile 'com.noober:savehelper-api:1.0.0'
-    annotationProcessor 'com.noober:processor:1.0.0'
    
