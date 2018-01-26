@@ -1,4 +1,4 @@
-[![license](https://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/didi/VirtualAPK/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/JavaNoober/AutoSave)
 [![JCenter](https://img.shields.io/badge/JCenter-AutoSaver-green.svg?style=flat)](https://bintray.com/noober/maven/AutoSaver)
 
 
