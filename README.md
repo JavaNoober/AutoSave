@@ -1,4 +1,4 @@
-[![license](https://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/didi/VirtualAPK/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/JavaNoober/AutoSave)
 [![JCenter](https://img.shields.io/badge/JCenter-AutoSaver-green.svg?style=flat)](https://bintray.com/noober/maven/AutoSaver)
 
 
@@ -13,6 +13,13 @@
     1.0.3 优化代码生成,如果一个activity或者fragment中没有有效的@NeedSave注解，但是添加了SaveHelper.recover和SaveHelper.save
           方法，现在就不会自动生成这个类的SaveStateHelper类，减少了无用SaveStateHelper类，便于在Base类中统一集成。
 
+
+引入方式,在app的gradle中加入下面依赖即可：
+
+
+    compile 'com.noober:savehelper:1.0.2'
+    compile 'com.noober:savehelper-api:1.0.2'
+    annotationProcessor 'com.noober:processor:1.0.2'
 
 # 引入
 
@@ -224,11 +231,4 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
 看到这里大家已经猜到其实这个框架的实现原理和BufferKnife是相同的。而bufferknife的原理很多文章都有，这里就不过多介绍了。
 
 github地址：[https://github.com/JavaNoober/AutoSave](https://github.com/JavaNoober/AutoSave)
-
-引入方式,在app的gradle中加入下面依赖即可：
-
-
-    compile 'com.noober:savehelper:1.0.0'
-    compile 'com.noober:savehelper-api:1.0.0'
-    annotationProcessor 'com.noober:processor:1.0.0'
    
