@@ -17,9 +17,9 @@
 引入方式,在app的gradle中加入下面依赖即可：
 
 
-    compile 'com.noober:savehelper:1.0.2'
-    compile 'com.noober:savehelper-api:1.0.2'
-    annotationProcessor 'com.noober:processor:1.0.2'
+    compile 'com.noober:savehelper:1.0.3'
+    compile 'com.noober:savehelper-api:1.0.3'
+    annotationProcessor 'com.noober:processor:1.0.3'
 
 # 引入
 
