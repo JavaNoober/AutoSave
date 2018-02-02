@@ -6,10 +6,12 @@
     
     1.0.0 完成基本功能;
     1.0.1 全局变量的作用域从之前强制public改成只要非private即可;
-    1.0.1 修改 SaveHelper.bind(this, savedInstanceState)方法为SaveHelper.recover(this, savedInstanceState),只是重命名，
+    1.0.2 修改 SaveHelper.bind(this, savedInstanceState)方法为SaveHelper.recover(this, savedInstanceState),只是重命名，
           以便于理解;
-          去掉当内存被收回去调用recover方法时，却没有对应helper类会主动抛异常的情况,方便在BaseAcitviy 和 BaseFragment的
+          去掉当内存被回收去调用recover方法时，却没有对应helper类会主动抛异常的情况,方便在BaseAcitviy 和 BaseFragment的
           onSaveInstanceState 和 onRestoreInstanceState 统一添加SaveHelper.save和SaveHelper.recover方法。
+    1.0.3 优化代码生成,如果一个activity或者fragment中没有有效的@NeedSave注解，但是添加了SaveHelper.recover和SaveHelper.save
+          方法，现在就不会自动生成这个类的SaveStateHelper类，减少了无用SaveStateHelper类，便于在Base类中统一集成。
 
 
 # 引入

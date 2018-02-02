@@ -56,6 +56,7 @@ public class HelperClass {
 					.addAnnotation(Override.class)
 					.beginControlFlow("if(savedInstanceState != null)");
 
+			int efficientElement = 0;
 			for (HelperSavedValues value : elementArrayList) {
 				Name fieldName = value.getSimpleName();
 				String fieldType = value.getFieldType().toString();
@@ -64,6 +65,7 @@ public class HelperClass {
 				if(value.isPrivate()){
 					continue;
 				}
+				efficientElement ++;
 				if(!type.equals("unKnow")){
 					addMethodStatement(saveMethodBuilder,recoverMethodBuilder, type, fieldName);
 				}else {
@@ -78,6 +80,10 @@ public class HelperClass {
 								fieldName, ClassName.get(value.getFieldType()),fieldName.toString().toUpperCase());
 					}
 				}
+			}
+
+			if(efficientElement == 0){
+				return null;
 			}
 			recoverMethodBuilder.endControlFlow();
 

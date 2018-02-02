@@ -13,7 +13,7 @@ public class TestActivity extends BaseActivity {
 	private Button button;
 	private final static String testContent = "This is a test code:";
 
-	@NeedSave
+//	@NeedSave
 	String testString = "11111111";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
