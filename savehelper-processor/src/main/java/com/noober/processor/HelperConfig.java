@@ -10,7 +10,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 
 /**
- * Created by xiaoqi on 2017/1/10.
+ * Created by xiaoqi on 2017/1/10
  */
 
 public class HelperConfig {
@@ -137,10 +137,15 @@ public class HelperConfig {
 					break;
 				} else if (tm.toString().equals(FieldConstant.SERIALIZABLE)) {
 					type = SERIALIZABLE;
+					break;
 				}
 			}
-		} else {
-			type = "unKnow";
+		}
+		if(type.equals("unKnow")){
+			TypeMirror typeMirror = typeElement.getSuperclass();
+			if(!typeMirror.toString().equals(Object.class.getCanonicalName())){
+				type = getFieldInterface(elementUtils, typeMirror.toString());
+			}
 		}
 		return type;
 	}

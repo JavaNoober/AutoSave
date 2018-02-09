@@ -35,7 +35,7 @@ ext {
     userOrg = 'noober'
     groupId = 'com.noober'
     uploadName = 'AutoSaver'
-    publishVersion = '2.0.0'
+    publishVersion = '2.0.2'
     desc = "A light weight framework can automatically generate 'OnSaveInstanceState' code"
     website = 'https://github.com/JavaNoober/AutoSave'
 //    gradlew clean build bintrayUpload -PbintrayUser=xiaoqiandroid -PbintrayKey=xxxxxxxxxxxxxxxx -PdryRun=false

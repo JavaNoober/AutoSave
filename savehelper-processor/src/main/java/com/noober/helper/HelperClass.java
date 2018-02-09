@@ -140,8 +140,7 @@ public class HelperClass {
 
 	private void addMethodStatementForClassCast(MethodSpec.Builder saveMethodBuilder, MethodSpec.Builder recoverMethodBuilder, HelperSavedValues value, Name fieldName, String type) {
 		saveMethodBuilder.addStatement(String.format("outState.put%s($S,save.$N)", type), fieldName
-				.toString
-						().toUpperCase(),fieldName);
+				.toString().toUpperCase(),fieldName);
 		recoverMethodBuilder.addStatement(String.format("recover.$N = ($T)savedInstanceState.get%s($S)", type),
 				fieldName, ClassName.get(value.getFieldType()),fieldName.toString().toUpperCase());
 	}

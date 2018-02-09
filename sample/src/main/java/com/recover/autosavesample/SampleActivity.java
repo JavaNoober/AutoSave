@@ -64,7 +64,11 @@ public class SampleActivity extends AppCompatActivity {
 	@NeedSave
 	SizeF sizeFS;
 
+	@NeedSave
+	SecondSExample secondSExample;
 
+//	@NeedSave
+//	SecondSExample2 secondSExample2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
