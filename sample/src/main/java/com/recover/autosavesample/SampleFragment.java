@@ -26,8 +26,8 @@ public class SampleFragment extends Fragment {
 	public ArrayList<String> t;
 	@NeedSave
 	public Integer i;
-	@NeedSave(isParcelable = true)
-	public Example example;
+	@NeedSave()
+	public ParcelableExample parcelableExample;
 	@NeedSave
 	public Float f1;
 	@NeedSave
@@ -35,7 +35,7 @@ public class SampleFragment extends Fragment {
 	@NeedSave
 	public char achar;
 	@NeedSave
-	private char achars[];
+	char achars[];
 
 
 	@Nullable

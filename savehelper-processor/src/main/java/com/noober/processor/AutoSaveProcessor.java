@@ -79,19 +79,11 @@ public class AutoSaveProcessor extends AbstractProcessor{
 		String fullClassName = encloseElement.getQualifiedName().toString();
 		HelperClass annotatedClass = mHelperClassMap.get(fullClassName);
 		if (annotatedClass == null) {
-			annotatedClass = new HelperClass(encloseElement, elementUtils,messager);
+			annotatedClass = new HelperClass(encloseElement, elementUtils, messager);
 			mHelperClassMap.put(fullClassName, annotatedClass);
 		}
 		HelperSavedValues values = new HelperSavedValues(element);
 		annotatedClass.addField(values);
 		return annotatedClass;
-	}
-
-	private void error(String msg, Object... args) {
-		messager.printMessage(Diagnostic.Kind.ERROR, String.format(msg, args));
-	}
-
-	private void info(String msg, Object... args) {
-		messager.printMessage(Diagnostic.Kind.NOTE, String.format(msg, args));
 	}
 }

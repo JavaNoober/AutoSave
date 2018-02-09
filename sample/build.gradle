@@ -21,7 +21,6 @@ android {
     }
 }
 
-
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -30,10 +29,10 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:+'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.noober:savehelper:1.0.3'
-    annotationProcessor 'com.noober:processor:1.0.3'
-    implementation 'com.noober:savehelper-api:1.0.3'
-//    implementation project(':savehelper')
-//    implementation project(':savehelper-api')
-//    annotationProcessor project(':savehelper-processor')
+    implementation 'com.noober:savehelper:2.0.0'
+    annotationProcessor 'com.noober:processor:2.0.0'
+    implementation 'com.noober:savehelper-api:2.0.0'
+//        implementation project(':savehelper')
+//        implementation project(':savehelper-api')
+//        annotationProcessor project(':savehelper-processor')
 }

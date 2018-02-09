@@ -12,14 +12,18 @@
           onSaveInstanceState 和 onRestoreInstanceState 统一添加SaveHelper.save和SaveHelper.recover方法。
     1.0.3 优化代码生成,如果一个activity或者fragment中没有有效的@NeedSave注解，但是添加了SaveHelper.recover和SaveHelper.save
           方法，现在就不会自动生成这个类的SaveStateHelper类，减少了无用SaveStateHelper类，便于在Base类中统一集成。
+          
+    2.0.0 去掉NeedSave注解中的isParcelable字段，自动可以支持不同类型;
+          如果字段被标记为private在编译的时候会抛异常;
+          支持基本所有bundle可以传入的类型,包括SparseParcelableArray等, 如果传入的类型bundle不支持会抛异常（如果有遗漏的类型，请在github 提出issue）;
 
 
 引入方式,在app的gradle中加入下面依赖即可：
 
 
-    compile 'com.noober:savehelper:1.0.3'
-    compile 'com.noober:savehelper-api:1.0.3'
-    annotationProcessor 'com.noober:processor:1.0.3'
+    compile 'com.noober:savehelper:2.0.0'
+    compile 'com.noober:savehelper-api:2.0.0'
+    annotationProcessor 'com.noober:processor:2.0.0'
 
 # 引入
 
@@ -68,7 +72,7 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 	public ArrayList<String> t;
 	@NeedSave
 	public Integer i;
-	@NeedSave(isParcelable = true)
+	@NeedSave
 	public ParcelableObject example;
 	@NeedSave
 	public SerializableObject example;
@@ -143,7 +147,7 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 这是一个注解，这个注解只能使用在全局变量中，特别注意，~~被加上这个注解的变量必须是**public**，否则会不生效~~。
 1.0.1更新为只要非private即可。
 
-当前支持保存的类型有：
+~~当前支持保存的类型有：~~
 
         String
         boolean Boolean
@@ -155,7 +159,9 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
         char[] char
         Bundle
 
-    注意，如果是Parcelable类型，需要特别在注解中加入	@NeedSave(isParcelable = true) 这样标记
+~~注意，如果是Parcelable类型，需要特别在注解中加入	@NeedSave(isParcelable = true) 这样标记~~
+**目前已经自动支持所有的类型，isParcelable已经弃用。**
+
 ## SaveHelper.recover(this,savedInstanceState);
 这个方法其实是恢复数据的时候去调用的。
 

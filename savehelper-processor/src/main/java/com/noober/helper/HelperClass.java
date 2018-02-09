@@ -12,10 +12,13 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 
 import javax.annotation.processing.Messager;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
+import javax.tools.Diagnostic;
 
 
 public class HelperClass {
@@ -59,26 +62,22 @@ public class HelperClass {
 			int efficientElement = 0;
 			for (HelperSavedValues value : elementArrayList) {
 				Name fieldName = value.getSimpleName();
-				String fieldType = value.getFieldType().toString();
-				String type = HelperConfig.getFieldType(fieldType);
+				TypeMirror typeMirror = value.getFieldType();
 				//only support public field
 				if(value.isPrivate()){
+					error("the modifier of the field must not be private, otherwise  it won't work", value.getEncloseElement());
 					continue;
 				}
+				String type = HelperConfig.getFieldType(elementUtils, typeMirror);
 				efficientElement ++;
 				if(!type.equals("unKnow")){
-					addMethodStatement(saveMethodBuilder,recoverMethodBuilder, type, fieldName);
-				}else {
-					if(value.isParcelable()){
-						saveMethodBuilder.addStatement("outState.putParcelable($S,save.$N)", fieldName.toString().toUpperCase(),fieldName);
-						recoverMethodBuilder.addStatement("recover.$N = savedInstanceState.getParcelable($S)",
-								fieldName, fieldName.toString().toUpperCase());
+					if(type.equals("Serializable") || type.equals("ParcelableArray")){
+						addMethodStatementForClassCast(saveMethodBuilder, recoverMethodBuilder, value, fieldName, type);
 					}else {
-						saveMethodBuilder.addStatement("outState.putSerializable($S,save.$N)", fieldName.toString
-								().toUpperCase(),fieldName);
-						recoverMethodBuilder.addStatement("recover.$N = ($T)savedInstanceState.getSerializable($S)",
-								fieldName, ClassName.get(value.getFieldType()),fieldName.toString().toUpperCase());
+						addMethodStatement(saveMethodBuilder,recoverMethodBuilder, type, fieldName);
 					}
+				}else {
+					error("this field is not support yet", value.getEncloseElement());
 				}
 			}
 
@@ -96,7 +95,6 @@ public class HelperClass {
 					.addMethod(saveMethod)
 					.addMethod(recoverMethod)
 					.build();
-
 			JavaFile javaFile = JavaFile.builder(getPackageName(), cacheClassTypeSpec).build();
 			return javaFile;
 		} catch (Exception e) {
@@ -140,5 +138,20 @@ public class HelperClass {
 		addRecoverMethodStatement(recoverMethodBuilder,str,fieldName);
 	}
 
+	private void addMethodStatementForClassCast(MethodSpec.Builder saveMethodBuilder, MethodSpec.Builder recoverMethodBuilder, HelperSavedValues value, Name fieldName, String type) {
+		saveMethodBuilder.addStatement(String.format("outState.put%s($S,save.$N)", type), fieldName
+				.toString
+						().toUpperCase(),fieldName);
+		recoverMethodBuilder.addStatement(String.format("recover.$N = ($T)savedInstanceState.get%s($S)", type),
+				fieldName, ClassName.get(value.getFieldType()),fieldName.toString().toUpperCase());
+	}
+
+	private void error(String msg, Element element) {
+		messager.printMessage(Diagnostic.Kind.ERROR, msg, element);
+	}
+
+	private void info(String msg, Object... args) {
+		messager.printMessage(Diagnostic.Kind.NOTE, String.format(msg, args));
+	}
 
 }
