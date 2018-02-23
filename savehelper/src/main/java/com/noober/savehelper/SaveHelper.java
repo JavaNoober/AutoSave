@@ -54,7 +54,8 @@ public class SaveHelper {
 				saveInstanceStateHelper = (ISaveInstanceStateHelper<T>)findClass.newInstance();
 				helperCache.put(clazz,saveInstanceStateHelper);
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				// ignore
+				//e.printStackTrace();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
