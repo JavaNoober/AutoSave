@@ -31,6 +31,9 @@ public class HelperSavedValues {
 		return encloseElement.getKind();
 	}
 
+	public VariableElement getElement(){
+		return encloseElement;
+	}
 
 	public Name getSimpleName(){
 		return encloseElement.getSimpleName();

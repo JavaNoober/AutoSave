@@ -24,6 +24,9 @@ public class TestActivity extends BaseActivity {
 	@NeedSave
 	String[] stringArray;
 
+	@NeedSave
+	EnumTest enumTest;
+
 	SerializableExample[] ssss;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

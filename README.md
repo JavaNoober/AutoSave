@@ -18,14 +18,15 @@
           支持基本所有bundle可以传入的类型,包括SparseParcelableArray等, 如果传入的类型bundle不支持会抛异常（如果有遗漏的类型，请在github 提出issue）;
     2.0.2 修复通过继承去实现Serializable的对象不能识别的bug;
     2.0.3 优化异常提示
+    2.0.4 修复枚举类型保存的时候不能识别的问题
 
 
 引入方式,在app的gradle中加入下面依赖即可：
 
 
-    compile 'com.noober:savehelper:2.0.3'
-    compile 'com.noober:savehelper-api:2.0.3'
-    annotationProcessor 'com.noober:processor:2.0.3'
+    compile 'com.noober:savehelper:2.0.4'
+    compile 'com.noober:savehelper-api:2.0.4'
+    annotationProcessor 'com.noober:processor:2.0.4'
 
 # 引入
 

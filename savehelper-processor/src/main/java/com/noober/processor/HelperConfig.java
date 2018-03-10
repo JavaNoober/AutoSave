@@ -1,5 +1,6 @@
 package com.noober.processor;
 
+import com.noober.helper.HelperSavedValues;
 import com.noober.utils.FieldConstant;
 
 import java.lang.reflect.Field;
@@ -143,7 +144,9 @@ public class HelperConfig {
 		}
 		if(type.equals("unKnow")){
 			TypeMirror typeMirror = typeElement.getSuperclass();
-			if(!typeMirror.toString().equals(Object.class.getCanonicalName())){
+			if(typeMirror.toString().startsWith("java.lang.Enum<")){
+				type = SERIALIZABLE;
+			}else if(!typeMirror.toString().equals(Object.class.getCanonicalName())){
 				type = getFieldInterface(elementUtils, typeMirror.toString());
 			}
 		}
