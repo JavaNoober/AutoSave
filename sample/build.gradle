@@ -29,10 +29,10 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.noober:savehelper:2.0.4'
-    annotationProcessor 'com.noober:processor:2.0.4'
-    implementation 'com.noober:savehelper-api:2.0.4'
-//        implementation project(':savehelper')
-//        implementation project(':savehelper-api')
-//        annotationProcessor project(':savehelper-processor')
+    implementation 'com.noober:savehelper:2.1.0'
+    annotationProcessor 'com.noober:processor:2.1.0'
+    implementation 'com.noober:savehelper-api:2.1.0'
+//            implementation project(':savehelper')
+//            implementation project(':savehelper-api')
+//            annotationProcessor project(':savehelper-processor')
 }

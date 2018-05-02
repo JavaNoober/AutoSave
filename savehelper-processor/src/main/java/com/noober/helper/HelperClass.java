@@ -23,134 +23,166 @@ import javax.tools.Diagnostic;
 
 public class HelperClass {
 
-	private TypeElement encloseElement;
-	private Elements elementUtils;
-	private ArrayList<HelperSavedValues> elementArrayList;
-	private Messager messager;
+    private TypeElement encloseElement;
+    private Elements elementUtils;
+    private ArrayList<HelperSavedValues> elementArrayList;
+    private Messager messager;
 
-	public HelperClass(TypeElement encloseElement, Elements elementUtils, Messager messager){
-		this.encloseElement = encloseElement;
-		this.elementUtils = elementUtils;
-		elementArrayList = new ArrayList<>();
-		this.messager = messager;
-	}
+    public HelperClass(TypeElement encloseElement, Elements elementUtils, Messager messager) {
+        this.encloseElement = encloseElement;
+        this.elementUtils = elementUtils;
+        elementArrayList = new ArrayList<>();
+        this.messager = messager;
+    }
 
-	public void addField(HelperSavedValues savedValues){
-		elementArrayList.add(savedValues);
-	}
+    public void addField(HelperSavedValues savedValues) {
+        elementArrayList.add(savedValues);
+    }
 
-	public JavaFile generateCode(){
-		try {
-			TypeName cacheClass =  ClassName.get(encloseElement.asType());
-			MethodSpec.Builder saveMethodBuilder;
-			MethodSpec.Builder recoverMethodBuilder;
-			saveMethodBuilder = MethodSpec.methodBuilder("save")
-					.addModifiers(Modifier.PUBLIC)
-					.returns(void.class)
-					.addParameter(TypeUtil.BUNDLE, "outState")
-					.addParameter(cacheClass, "save")
-					.addAnnotation(Override.class);
+    public JavaFile generateCode() {
+        try {
+            TypeName cacheClass = ClassName.get(encloseElement.asType());
+            MethodSpec.Builder saveMethodBuilder = MethodSpec.methodBuilder("save")
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(void.class)
+                    .addParameter(TypeUtil.BUNDLE, "outState")
+                    .addParameter(TypeUtil.PERSISTABLE_BUNDLE, "outPersistentState")
+                    .addParameter(cacheClass, "save")
+                    .addAnnotation(Override.class)
+                    .beginControlFlow("if(outState != null)");
 
-			recoverMethodBuilder = MethodSpec.methodBuilder("recover")
-					.addModifiers(Modifier.PUBLIC)
-					.returns(void.class)
-					.addParameter(TypeUtil.BUNDLE, "savedInstanceState")
-					.addParameter(cacheClass, "recover")
-					.addAnnotation(Override.class)
-					.beginControlFlow("if(savedInstanceState != null)");
 
-			int efficientElement = 0;
-			for (HelperSavedValues value : elementArrayList) {
-				Name fieldName = value.getSimpleName();
-				TypeMirror typeMirror = value.getFieldType();
-				//only support public field
-				if(value.isPrivate()){
-					error("the modifier of the field must not be private, otherwise  it won't work", value.getEncloseElement());
-					continue;
-				}
-				String type = HelperConfig.getFieldType(elementUtils, typeMirror);
-				efficientElement ++;
-				if(!type.equals("unKnow")){
-					if(type.equals("Serializable") || type.equals("ParcelableArray")){
-						addMethodStatementForClassCast(saveMethodBuilder, recoverMethodBuilder, value, fieldName, type);
-					}else {
-						addMethodStatement(saveMethodBuilder,recoverMethodBuilder, type, fieldName);
-					}
-				}else {
-					error("this field is not support yet", value.getEncloseElement());
-				}
-			}
+            MethodSpec.Builder recoverMethodBuilder = MethodSpec.methodBuilder("recover")
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(void.class)
+                    .addParameter(TypeUtil.BUNDLE, "savedInstanceState")
+                    .addParameter(TypeUtil.PERSISTABLE_BUNDLE, "persistentState")
+                    .addParameter(cacheClass, "recover")
+                    .addAnnotation(Override.class)
+                    .beginControlFlow("if(savedInstanceState != null)");
 
-			if(efficientElement == 0){
-				return null;
-			}
-			recoverMethodBuilder.endControlFlow();
+            int efficientElement = 0;
+            ArrayList<HelperSavedValues> persistentArrayList = new ArrayList<>();
+            for (HelperSavedValues value : elementArrayList) {
+                //only support public field
+                if (value.isPrivate()) {
+                    error("the modifier of the field must not be private, otherwise  it won't work", value.getEncloseElement());
+                    continue;
+                }
+                if (value.isPersistable()) {
+                    persistentArrayList.add(value);
+                    continue;
+                }
+                Name fieldName = value.getSimpleName();
+                TypeMirror typeMirror = value.getFieldType();
+                String type = HelperConfig.getBundleFieldType(elementUtils, typeMirror);
+                efficientElement++;
+                if (!type.equals(HelperConfig.UNKONW)) {
+                    if (type.equals("Serializable") || type.equals("ParcelableArray")) {
+                        addMethodStatementForClassCast("outState", "savedInstanceState", saveMethodBuilder, recoverMethodBuilder, value, fieldName, type);
+                    } else {
+                        addMethodStatement("outState", "savedInstanceState", saveMethodBuilder, recoverMethodBuilder, type, fieldName);
+                    }
+                } else {
+                    error("this field is not support yet", value.getEncloseElement());
+                }
+            }
+            saveMethodBuilder.endControlFlow();
+            recoverMethodBuilder.endControlFlow();
 
-			MethodSpec saveMethod = saveMethodBuilder.build();
-			MethodSpec recoverMethod = recoverMethodBuilder.build();
-			String className = encloseElement.getSimpleName().toString() + HelperConfig.HELP_CLASS;
-			TypeSpec cacheClassTypeSpec = TypeSpec.classBuilder(className)
-					.addModifiers(Modifier.PUBLIC)
-					.addSuperinterface(ParameterizedTypeName.get(TypeUtil.IHELPER, cacheClass))
-					.addMethod(saveMethod)
-					.addMethod(recoverMethod)
-					.build();
-			JavaFile javaFile = JavaFile.builder(getPackageName(), cacheClassTypeSpec).build();
-			return javaFile;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+            if (persistentArrayList.size() > 0) {
+                saveMethodBuilder.beginControlFlow("if(outPersistentState != null)");
+                recoverMethodBuilder.beginControlFlow("if(persistentState != null)");
+                for (HelperSavedValues value : persistentArrayList) {
+                    Name fieldName = value.getSimpleName();
+                    TypeMirror typeMirror = value.getFieldType();
+                    String type = HelperConfig.getPersistableBundleFieldType(elementUtils, typeMirror);
+                    efficientElement++;
+                    if (!type.equals(HelperConfig.UNKONW)) {
+                        if (type.equals("Serializable") || type.equals("ParcelableArray")) {
+                            addMethodStatementForClassCast("outPersistentState", "persistentState", saveMethodBuilder, recoverMethodBuilder, value, fieldName, type);
+                        } else {
+                            addMethodStatement("outPersistentState", "persistentState", saveMethodBuilder, recoverMethodBuilder, type, fieldName);
+                        }
+                    } else {
+                        error("this field is not support yet", value.getEncloseElement());
+                    }
 
-	private String getPackageName() {
-		return elementUtils.getPackageOf(encloseElement).getQualifiedName().toString();
-	}
+                }
+                saveMethodBuilder.endControlFlow();
+                recoverMethodBuilder.endControlFlow();
+            }
 
-	private String getCacheClassName(){
-		return encloseElement.getSimpleName().toString() + "_Cache";
-	}
 
-	private String upperFirstWord(String str){
-		if(str != null){
-			char[] ch = str.toCharArray();
-			if (ch[0] >= 'a' && ch[0] <= 'z') {
-				ch[0] = (char) (ch[0] - 32);
-			}
-			return new String(ch);
-		}else {
-			return "";
-		}
-	}
+            if (efficientElement == 0) {
+                return null;
+            }
 
-	private void addSaveMethodStatement(MethodSpec.Builder saveMethodBuilder, String str, Name fieldName){
-		saveMethodBuilder.addStatement(String.format("outState.put%s($S,save.$N)",upperFirstWord(str)),
-				fieldName.toString().toUpperCase(),fieldName);
-	}
+            MethodSpec saveMethod = saveMethodBuilder.build();
+            MethodSpec recoverMethod = recoverMethodBuilder.build();
+            String className = encloseElement.getSimpleName().toString() + HelperConfig.HELP_CLASS;
+            TypeSpec cacheClassTypeSpec = TypeSpec.classBuilder(className)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addSuperinterface(ParameterizedTypeName.get(TypeUtil.IHELPER, cacheClass))
+                    .addMethod(saveMethod)
+                    .addMethod(recoverMethod)
+                    .build();
+            JavaFile javaFile = JavaFile.builder(getPackageName(), cacheClassTypeSpec).build();
+            return javaFile;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	private void addRecoverMethodStatement(MethodSpec.Builder recoverMethodBuilder, String str, Name fieldName){
-		recoverMethodBuilder.addStatement(String.format("recover.$N = savedInstanceState.get%s($S)",upperFirstWord(str)),
-				fieldName, fieldName.toString().toUpperCase());
-	}
+    private String getPackageName() {
+        return elementUtils.getPackageOf(encloseElement).getQualifiedName().toString();
+    }
 
-	private void addMethodStatement(MethodSpec.Builder saveMethodBuilder,MethodSpec.Builder recoverMethodBuilder, String str, Name fieldName){
-		addSaveMethodStatement(saveMethodBuilder,str,fieldName);
-		addRecoverMethodStatement(recoverMethodBuilder,str,fieldName);
-	}
+    private String getCacheClassName() {
+        return encloseElement.getSimpleName().toString() + "_Cache";
+    }
 
-	private void addMethodStatementForClassCast(MethodSpec.Builder saveMethodBuilder, MethodSpec.Builder recoverMethodBuilder, HelperSavedValues value, Name fieldName, String type) {
-		saveMethodBuilder.addStatement(String.format("outState.put%s($S,save.$N)", type), fieldName
-				.toString().toUpperCase(),fieldName);
-		recoverMethodBuilder.addStatement(String.format("recover.$N = ($T)savedInstanceState.get%s($S)", type),
-				fieldName, ClassName.get(value.getFieldType()),fieldName.toString().toUpperCase());
-	}
+    private String upperFirstWord(String str) {
+        if (str != null) {
+            char[] ch = str.toCharArray();
+            if (ch[0] >= 'a' && ch[0] <= 'z') {
+                ch[0] = (char) (ch[0] - 32);
+            }
+            return new String(ch);
+        } else {
+            return "";
+        }
+    }
 
-	private void error(String msg, Element element) {
-		messager.printMessage(Diagnostic.Kind.ERROR, msg, element);
-	}
+    private void addSaveMethodStatement(String putParam, MethodSpec.Builder saveMethodBuilder, String type, Name fieldName) {
+        saveMethodBuilder.addStatement(String.format("%s.put%s($S,save.$N)", putParam, upperFirstWord(type)),
+                fieldName.toString().toUpperCase(), fieldName);
+    }
 
-	private void info(String msg, Object... args) {
-		messager.printMessage(Diagnostic.Kind.NOTE, String.format(msg, args));
-	}
+    private void addRecoverMethodStatement(String getParam, MethodSpec.Builder recoverMethodBuilder, String type, Name fieldName) {
+        recoverMethodBuilder.addStatement(String.format("recover.$N = %s.get%s($S)", getParam, upperFirstWord(type)),
+                fieldName, fieldName.toString().toUpperCase());
+    }
+
+    private void addMethodStatement(String putParam, String getParam, MethodSpec.Builder saveMethodBuilder, MethodSpec.Builder recoverMethodBuilder, String type, Name fieldName) {
+        addSaveMethodStatement(putParam, saveMethodBuilder, type, fieldName);
+        addRecoverMethodStatement(getParam, recoverMethodBuilder, type, fieldName);
+    }
+
+    private void addMethodStatementForClassCast(String putParam, String getParam, MethodSpec.Builder saveMethodBuilder, MethodSpec.Builder recoverMethodBuilder, HelperSavedValues value, Name fieldName, String type) {
+        saveMethodBuilder.addStatement(String.format("%s.put%s($S,save.$N)", putParam, type),
+                fieldName.toString().toUpperCase(), fieldName);
+        recoverMethodBuilder.addStatement(String.format("recover.$N = ($T)%s.get%s($S)", getParam, type),
+                fieldName, ClassName.get(value.getFieldType()), fieldName.toString().toUpperCase());
+    }
+
+    private void error(String msg, Element element) {
+        messager.printMessage(Diagnostic.Kind.ERROR, msg, element);
+    }
+
+    private void info(String msg, Object... args) {
+        messager.printMessage(Diagnostic.Kind.NOTE, String.format(msg, args));
+    }
 
 }

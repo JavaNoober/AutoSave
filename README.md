@@ -19,14 +19,16 @@
     2.0.2 修复通过继承去实现Serializable的对象不能识别的bug;
     2.0.3 优化异常提示
     2.0.4 修复枚举类型保存的时候不能识别的问题
+    
+    2.1.0 增加对PersistableBundle的支持,NeedSave注解中设置isPersistable = true则说明该参数保存到PersistableBundle
 
 
 引入方式,在app的gradle中加入下面依赖即可：
 
 
-    compile 'com.noober:savehelper:2.0.4'
-    compile 'com.noober:savehelper-api:2.0.4'
-    annotationProcessor 'com.noober:processor:2.0.4'
+    implementation 'com.noober:savehelper:2.1.0'
+    implementation 'com.noober:savehelper-api:2.1.0'
+    annotationProcessor 'com.noober:processor:2.1.0'
 
 # 引入
 
@@ -238,6 +240,31 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
 
 # 总结
 看到这里大家已经猜到其实这个框架的实现原理和BufferKnife是相同的。而bufferknife的原理很多文章都有，这里就不过多介绍了。
+
+# 更新
+## 2.1.0
+增加对PersistableBundle持久化数据的保存，用于手机关机重启后的数据恢复，使用方法如下：
+
+
+    @NeedSave(isPersistable = true)
+    PersistableBundle persistableBundle;  
+
+    @NeedSave(isPersistable = true)
+    int i;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        SaveHelper.recover(this, savedInstanceState, persistentState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        SaveHelper.save(this, outState, outPersistentState);
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+
 
 github地址：[https://github.com/JavaNoober/AutoSave](https://github.com/JavaNoober/AutoSave)
    

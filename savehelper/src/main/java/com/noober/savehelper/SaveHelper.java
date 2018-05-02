@@ -1,6 +1,7 @@
 package com.noober.savehelper;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class SaveHelper {
 	private final static String HELPER_END = "_SaveStateHelper";
 
 	/**
-	 * Equate to{@link SaveHelper#recover}, it's just renamed to make it easier to understand
+	 * equate to{@link SaveHelper#recover}, it's just renamed to make it easier to understand
 	 */
 	@Deprecated
 	public static <T> void bind(T recover, Bundle savedInstanceState){
@@ -19,29 +20,56 @@ public class SaveHelper {
 	}
 
 	/**
-	 * added where need to recover data
+	 * added while need to recover data, used in {@link android.app.Activity#onCreate(Bundle)}
 	 *
 	 * @param recover current Activity or Fragment
 	 * @param savedInstanceState Bundle
 	 */
 	public static <T> void recover(T recover, Bundle savedInstanceState){
-		if(savedInstanceState != null){
-			ISaveInstanceStateHelper<T> saveInstanceStateHelper = findSaveHelper(recover);
-			if(saveInstanceStateHelper != null){
-				saveInstanceStateHelper.recover(savedInstanceState, recover);
-			}
-		}
+		recover(recover, savedInstanceState, null);
 	}
 
+    /**
+     * equate to{@link SaveHelper#recover(Object, Bundle)}, used in {@link android.app.Activity#onCreate(Bundle, PersistableBundle)}
+     * added in 2.1.0
+     *
+     * @param recover current Activity or Fragment
+     * @param savedInstanceState Bundle
+     */
+    public static <T> void recover(T recover, Bundle savedInstanceState, PersistableBundle persistentState){
+        if(savedInstanceState != null || persistentState != null){
+            ISaveInstanceStateHelper<T> persistableSaveHelper = findSaveHelper(recover);
+            if(persistableSaveHelper != null){
+                persistableSaveHelper.recover(savedInstanceState, persistentState, recover);
+            }
+        }
+    }
+
+    /**
+     * added while need to save data, used in {@link android.app.Activity#onSaveInstanceState(Bundle)}
+     *
+     * @param save current Activity or Fragment
+     * @param outState Bundle
+     */
 	public static <T> void save(T save, Bundle outState){
-		if(outState != null){
-			ISaveInstanceStateHelper<T> saveInstanceStateHelper = findSaveHelper(save);
-			if(saveInstanceStateHelper != null){
-				saveInstanceStateHelper.save(outState, save);
-			}
-		}
+		save(save, outState, null);
 	}
 
+    /**
+     * equate to{@link SaveHelper#save(Object, Bundle)}, used in {@link android.app.Activity#onSaveInstanceState(Bundle, PersistableBundle)}
+     * added in 2.1.0
+     *
+     * @param save current Activity or Fragment
+     * @param outState Bundle
+     */
+    public static <T> void save(T save, Bundle outState, PersistableBundle persistentState){
+        if(outState != null || persistentState != null){
+			ISaveInstanceStateHelper<T> persistableSaveHelper = findSaveHelper(save);
+            if(persistableSaveHelper != null){
+                persistableSaveHelper.save(outState, persistentState, save);
+            }
+        }
+    }
 
 	private static <T> ISaveInstanceStateHelper<T> findSaveHelper(T cl) {
 		String clazz = cl.getClass().getName();

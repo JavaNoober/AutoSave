@@ -1,5 +1,7 @@
 package com.noober.helper;
 
+import com.noober.api.NeedSave;
+
 import java.util.Set;
 
 import javax.lang.model.element.Element;
@@ -57,5 +59,9 @@ public class HelperSavedValues {
 			}
 		}
 		return false;
+	}
+
+	public boolean isPersistable(){
+		return encloseElement.getAnnotation(NeedSave.class).isPersistable();
 	}
 }

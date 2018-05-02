@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface NeedSave {
 
+    boolean isPersistable() default false;
 }

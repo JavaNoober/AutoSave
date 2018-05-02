@@ -1,6 +1,5 @@
 package com.noober.processor;
 
-import com.noober.helper.HelperSavedValues;
 import com.noober.utils.FieldConstant;
 
 import java.lang.reflect.Field;
@@ -22,38 +21,23 @@ public class HelperConfig {
 
 	private final static String SERIALIZABLE = "Serializable";
 
-	public static String getFieldType(Elements elementUtils, TypeMirror typeMirror) throws Exception {
+	public final static String UNKONW = "unKnow";
+
+	public static String getBundleFieldType(Elements elementUtils, TypeMirror typeMirror) throws Exception {
 		String fieldType = typeMirror.toString();
-		String type = "unKnow";
-		if (fieldType.equals(FieldConstant.STRING)) {
-			type = "String";
-		} else if (fieldType.equals(FieldConstant.STRING + "[]")) {
-			type = "StringArray";
-		} else if (fieldType.equals("int") || fieldType.equals(FieldConstant.INTEGER)) {
-			type = "Int";
-		} else if (fieldType.equals("int[]")) {
-			type = "IntArray";
-		} else if (fieldType.equals("short") || fieldType.equals(FieldConstant.SHORT)) {
+		String type = getBaseFieldType(elementUtils, typeMirror);
+		if(!type.equals(UNKONW)){
+		    return type;
+        }
+		if (fieldType.equals("short") || fieldType.equals(FieldConstant.SHORT)) {
 			type = "Short";
-		}else if (fieldType.equals("short[]")) {
+		} else if (fieldType.equals("short[]")) {
 			type = "ShortArray";
-		} else if (fieldType.equals("double") || fieldType.equals(FieldConstant.DOUBLE)) {
-			type = "Double";
-		} else if (fieldType.equals("double[]")) {
-			type = "DoubleArray";
 		} else if (fieldType.equals("float") || fieldType.equals(FieldConstant.FLOAT)) {
 			type = "Float";
 		} else if (fieldType.equals("float[]")) {
 			type = "FloatArray";
-		} else if (fieldType.equals("boolean") || fieldType.equals(FieldConstant.BOOLEAN)) {
-			type = "Boolean";
-		} else if (fieldType.equals("boolean[]")) {
-			type = "BooleanArray";
-		} else if (fieldType.equals("long") || fieldType.equals(FieldConstant.LONG)) {
-			type = "Long";
-		} else if (fieldType.equals("long[]")) {
-			type = "LongArray";
-		}else if (fieldType.equals("char")) {
+		} else if (fieldType.equals("char")) {
 			type = "Char";
 		} else if (fieldType.equals("char[]")) {
 			type = "CharArray";
@@ -72,7 +56,7 @@ public class HelperConfig {
 
 			String outFieldName = outField.get(typeMirror).toString();
 
-			if (outFieldName.equals(FieldConstant.ARRAYLIST)) {
+			if (outFieldName.equals(FieldConstant.ARRAY_LIST)) {
 				Field innerField = cla.getField("typarams_field");
 				innerField.setAccessible(true);
 				List innerFieldList = (List) innerField.get(typeMirror);
@@ -82,7 +66,7 @@ public class HelperConfig {
 				}
 				if (innerFieldName.equals(FieldConstant.STRING)) {
 					type = "StringArrayList";
-				} else if (innerFieldName.equals(FieldConstant.CHARSEQUENCE)) {
+				} else if (innerFieldName.equals(FieldConstant.CHAR_SEQUENCE)) {
 					type = "CharSequenceArrayList";
 				} else if (innerFieldName.equals(FieldConstant.INTEGER)) {
 					type = "IntegerArrayList";
@@ -127,8 +111,47 @@ public class HelperConfig {
 		return type;
 	}
 
+    public static String getPersistableBundleFieldType(Elements elementUtils, TypeMirror typeMirror) throws Exception {
+        String fieldType = typeMirror.toString();
+        String type = getBaseFieldType(elementUtils, typeMirror);
+        if(!type.equals(UNKONW)){
+            return type;
+        }
+        else if(fieldType.equals(FieldConstant.PERSISTABLEBUNDLE)){
+            type = "PersistableBundle";
+        }
+        return type;
+    }
+
+	public static String getBaseFieldType(Elements elementUtils, TypeMirror typeMirror) throws Exception {
+		String fieldType = typeMirror.toString();
+		String type = UNKONW;
+		if (fieldType.equals(FieldConstant.STRING)) {
+			type = "String";
+		} else if (fieldType.equals(FieldConstant.STRING + "[]")) {
+			type = "StringArray";
+		} else if (fieldType.equals("int") || fieldType.equals(FieldConstant.INTEGER)) {
+			type = "Int";
+		} else if (fieldType.equals("int[]")) {
+			type = "IntArray";
+		} else if (fieldType.equals("double") || fieldType.equals(FieldConstant.DOUBLE)) {
+			type = "Double";
+		} else if (fieldType.equals("double[]")) {
+			type = "DoubleArray";
+		} else if (fieldType.equals("boolean") || fieldType.equals(FieldConstant.BOOLEAN)) {
+			type = "Boolean";
+		} else if (fieldType.equals("boolean[]")) {
+			type = "BooleanArray";
+		} else if (fieldType.equals("long") || fieldType.equals(FieldConstant.LONG)) {
+			type = "Long";
+		} else if (fieldType.equals("long[]")) {
+			type = "LongArray";
+		}
+		return type;
+	}
+
 	private static String getFieldInterface(Elements elementUtils, String outFieldName) {
-		String type = "unKnow";
+		String type = UNKONW;
 		TypeElement typeElement = elementUtils.getTypeElement(outFieldName);
 		List<TypeMirror> typeElementInterfaces = (List<TypeMirror>) typeElement.getInterfaces();
 		if (typeElementInterfaces.size() > 0) {
@@ -142,7 +165,7 @@ public class HelperConfig {
 				}
 			}
 		}
-		if(type.equals("unKnow")){
+		if(type.equals(UNKONW)){
 			TypeMirror typeMirror = typeElement.getSuperclass();
 			if(typeMirror.toString().startsWith("java.lang.Enum<")){
 				type = SERIALIZABLE;

@@ -1,5 +1,6 @@
 package com.recover.autosavesample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
@@ -40,6 +41,9 @@ public class TestActivity extends BaseActivity {
 			public void onClick(View v) {
 				testString = "222222222";
 				textView.setText(testContent + testString);
+                Intent intent = new Intent(TestActivity.this, SampleActivity.class);
+                intent.putExtra("test", 1);
+                startActivity(intent);
 			}
 		});
 	}

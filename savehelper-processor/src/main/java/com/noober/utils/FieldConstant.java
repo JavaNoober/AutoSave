@@ -25,11 +25,13 @@ public class FieldConstant {
 
 	public final static String BUNDLE = "android.os.Bundle";
 
-	public final static String ARRAYLIST = ArrayList.class.getCanonicalName();
+	public final static String PERSISTABLEBUNDLE = "android.os.PersistableBundle";
+
+	public final static String ARRAY_LIST = ArrayList.class.getCanonicalName();
 
 	public final static String ARRAY = "Array";
 
-	public final static String CHARSEQUENCE = CharSequence.class.getCanonicalName();
+	public final static String CHAR_SEQUENCE = CharSequence.class.getCanonicalName();
 
 	public final static String PARCELABLE = "android.os.Parcelable";
 
