@@ -30,6 +30,13 @@
     implementation 'com.noober:savehelper-api:2.1.0'
     annotationProcessor 'com.noober:processor:2.1.0'
 
+混淆配置：
+
+    -dontwarn  com.noober.**
+    -keep com.noober.api.**
+    -keep com.noober.savehelper.**
+    -keepclasseswithmembernames class * implements com.noober.savehelper.ISaveInstanceStateHelper {*;}
+
 # 引入
 
 android 内存被回收是一个开发者的常见问题。当我们**跳转到一个二级界面，或者切换到后台**的时候，如果时间过长或者手机的**内存不足**，当我们再返回这个界面的时候，activity或fragment就会被内存回收。这时候虽然界面被重新执行了onCreate，但是很多变量的值却已经被置空，这样就导致了很多潜在的bug，已经很多空指针的问题。
