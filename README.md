@@ -32,10 +32,10 @@
 
 混淆配置：
 
-    -dontwarn  com.noober.**
-    -keep class com.noober.api.**
-    -keep class com.noober.savehelper.**
-    -keepclasseswithmembernames class * implements com.noober.savehelper.ISaveInstanceStateHelper {*;}
+     -dontwarn  com.noober.**
+     -keep class com.noober.api.**
+     -keep class com.noober.savehelper.**
+     -keepclasseswithmembernames class * implements com.noober.savehelper.ISaveInstanceStateHelper {*;}
 
 # 引入
 
