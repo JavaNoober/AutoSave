@@ -33,9 +33,9 @@
 混淆配置：
 
      -dontwarn  com.noober.**
-     -keep class com.noober.api.**
-     -keep class com.noober.savehelper.**
-     -keepclasseswithmembernames class * implements com.noober.savehelper.ISaveInstanceStateHelper {*;}
+     -keep class com.noober.api.**{*;}
+     -keep class com.noober.savehelper.**{*;}
+     -keep class * implements com.noober.savehelper.ISaveInstanceStateHelper {*;}
 
 # 引入
 
@@ -246,7 +246,7 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
     }
 
 # 总结
-看到这里大家已经猜到其实这个框架的实现原理和BufferKnife是相同的。而bufferknife的原理很多文章都有，这里就不过多介绍了。
+看到这里大家已经猜到其实这个框架的实现原理和ButterKnife是相同的。而bufferknife的原理很多文章都有，这里就不过多介绍了。
 
 # 更新
 ## 2.1.0
