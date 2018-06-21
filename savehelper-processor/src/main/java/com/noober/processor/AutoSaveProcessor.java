@@ -77,7 +77,7 @@ public class AutoSaveProcessor extends AbstractProcessor{
 	private HelperClass getHelperClass(Element element) {
 		TypeElement encloseElement = (TypeElement) element.getEnclosingElement();
 		String fullClassName = encloseElement.getQualifiedName().toString();
-		HelperClass annotatedClass = mHelperClassMap.get(fullClassName);
+        HelperClass annotatedClass = mHelperClassMap.get(fullClassName);
 		if (annotatedClass == null) {
 			annotatedClass = new HelperClass(encloseElement, elementUtils, messager);
 			mHelperClassMap.put(fullClassName, annotatedClass);

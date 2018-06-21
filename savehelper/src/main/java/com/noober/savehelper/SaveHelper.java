@@ -1,13 +1,17 @@
 package com.noober.savehelper;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.util.SparseArray;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SaveHelper {
 	private static Map<String,ISaveInstanceStateHelper> helperCache = new HashMap<>();
+
+    private static Map<String,ISaveViewStateHelper> viewHelperCache = new HashMap<>();
 
 	private final static String HELPER_END = "_SaveStateHelper";
 
@@ -71,6 +75,37 @@ public class SaveHelper {
         }
     }
 
+
+	/**
+	 * added while need to save data, used in custom view
+	 *
+	 * @param save current custom view
+	 * @param container SparseArray<Parcelable>
+	 */
+	public static <T> void save(T save, SparseArray<Parcelable> container){
+        if(container != null){
+            ISaveViewStateHelper<T> viewSaveHelper = findViewSaveHelper(save);
+            if(viewSaveHelper != null){
+                viewSaveHelper.save(save, container);
+            }
+        }
+	}
+
+    /**
+     * recover for custom view
+     *
+     * @param save current custom view
+     * @param container SparseArray<Parcelable>
+     */
+    public static <T> void recover(T save, SparseArray<Parcelable> container){
+        if(container != null){
+            ISaveViewStateHelper<T> viewSaveHelper = findViewSaveHelper(save);
+            if(viewSaveHelper != null){
+                viewSaveHelper.recover(save, container);
+            }
+        }
+    }
+
 	private static <T> ISaveInstanceStateHelper<T> findSaveHelper(T cl) {
 		String clazz = cl.getClass().getName();
 		ISaveInstanceStateHelper<T> saveInstanceStateHelper = helperCache.get(clazz);
@@ -90,5 +125,24 @@ public class SaveHelper {
 		}
 		return saveInstanceStateHelper;
 	}
+
+    private static <T> ISaveViewStateHelper<T> findViewSaveHelper(T cl) {
+        String clazz = cl.getClass().getName();
+        ISaveViewStateHelper<T> saveViewStateHelper = viewHelperCache.get(clazz);
+        if(saveViewStateHelper == null){
+            try {
+                Class<?> findClass = Class.forName(clazz + HELPER_END);
+                saveViewStateHelper = (ISaveViewStateHelper<T>)findClass.newInstance();
+                viewHelperCache.put(clazz,saveViewStateHelper);
+            } catch (ClassNotFoundException e) {
+                // ignore
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return saveViewStateHelper;
+    }
 
 }

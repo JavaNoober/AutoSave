@@ -64,7 +64,7 @@ public class SampleActivity extends AppCompatActivity {
 //	long[] longArray;
 //	@NeedSave
 //	Size size;
-	@NeedSave
+    @NeedSave
 	SizeF sizeFS;
 
     @NeedSave
