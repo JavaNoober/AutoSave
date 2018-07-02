@@ -30,6 +30,17 @@
     implementation 'com.noober:savehelper-api:2.1.0'
     annotationProcessor 'com.noober:processor:2.1.0'
 
+kotlin的依赖方式
+
+    apply plugin: 'kotlin-kapt'
+    apply plugin: 'kotlin-android-extensions'
+    apply plugin: 'kotlin-android'
+
+    implementation 'com.noober:savehelper:2.1.0'
+    kapt 'com.noober:processor:2.1.0'
+    implementation 'com.noober:savehelper-api:2.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
 混淆配置：
 
      -dontwarn  com.noober.**
@@ -245,10 +256,54 @@ savedInstanceState不会null的时候，说明就是需要内存恢复的时候�
       }
     }
 
+# kotlin使用方法
+
+  如果要在kotlin使用，与在java中使用相同，直接加注解即可，但是不同之出在于：
+
+  1：如果是基本数据类型，需要多添加一个注解@JvmField
+
+  2：如果是其他数据类型，需要增加lateinit关键字或者添加一个注解@JvmField
+  否则会报错"the modifier of the field must not be private, otherwise  it won't work"。
+
+  示例：
+
+
+      class KotlinActivity : AppCompatActivity() {
+
+          @NeedSave
+          @JvmField
+          var a :Int=3
+
+          @NeedSave
+          lateinit var bundle: Bundle
+
+          override fun onCreate(savedInstanceState: Bundle?) {
+              super.onCreate(savedInstanceState)
+              setContentView(R.layout.activity_kotlin)
+              SaveHelper.recover(this, savedInstanceState)
+              Log.e("KotlinActivity",  a.toString())
+
+          }
+
+
+          override fun onSaveInstanceState(outState: Bundle?) {
+              Log.e("KotlinActivity",  "onSaveInstanceState")
+              a = 2
+              SaveHelper.save(this,  outState)
+              super.onSaveInstanceState(outState)
+          }
+      }
+
+
 # 总结
 看到这里大家已经猜到其实这个框架的实现原理和ButterKnife是相同的。而bufferknife的原理很多文章都有，这里就不过多介绍了。
 
 # 更新
+
+
+## 2.0.0
+   支持Bundle所有支持的的类型
+
 ## 2.1.0
 增加对PersistableBundle持久化数据的保存，用于手机关机重启后的数据恢复，使用方法如下：
 
