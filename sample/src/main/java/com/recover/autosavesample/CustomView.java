@@ -34,38 +34,15 @@ public class CustomView extends View {
     }
 
 
-    @Nullable
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        Log.e("CustomView", "onSaveInstanceState");
-        return super.onSaveInstanceState();
-    }
-
     @Override
     protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
-
         SaveHelper.save(this, container);
-        a = 2;
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("A", a);
-        container.put(1, bundle);
         super.dispatchSaveInstanceState(container);
-        Log.e("CustomView", "dispatchSaveInstanceState");
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        super.onRestoreInstanceState(state);
-        Log.e("CustomView", "onRestoreInstanceState");
     }
 
     @Override
     protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
         super.dispatchRestoreInstanceState(container);
         SaveHelper.recover(this, container);
-        Bundle bundle = (Bundle) container.get(1);
-        a = bundle.getInt("A");
-        Log.e("CustomView", "dispatchRestoreInstanceState");
     }
 }

@@ -31,10 +31,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:appcompat-v7:26.0.1'
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.noober:savehelper:2.1.0'
-    kapt 'com.noober:processor:2.1.0'
-    implementation 'com.noober:savehelper-api:2.1.0'
+//    testImplementation 'junit:junit:4.12'
+    implementation 'com.noober:savehelper:2.2.6'
+    kapt 'com.noober:processor:2.2.6'
+    implementation 'com.noober:savehelper-api:2.2.6'
 //    implementation project(':savehelper')
 //    implementation project(':savehelper-api')
 //    kapt project(':savehelper-processor')

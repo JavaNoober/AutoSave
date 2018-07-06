@@ -15,6 +15,8 @@ public class SaveHelper {
 
 	private final static String HELPER_END = "_SaveStateHelper";
 
+    private final static int VIEW_STATE_KEY = -999;
+
 	/**
 	 * equate to{@link SaveHelper#recover}, it's just renamed to make it easier to understand
 	 */
@@ -24,7 +26,7 @@ public class SaveHelper {
 	}
 
 	/**
-	 * added while need to recover data, used in {@link android.app.Activity#onCreate(Bundle)}
+	 * added while need to recover data, used in {android.app.Activity#onCreate(Bundle)}
 	 *
 	 * @param recover current Activity or Fragment
 	 * @param savedInstanceState Bundle
@@ -34,7 +36,7 @@ public class SaveHelper {
 	}
 
     /**
-     * equate to{@link SaveHelper#recover(Object, Bundle)}, used in {@link android.app.Activity#onCreate(Bundle, PersistableBundle)}
+     * equate to{@link SaveHelper#recover(Object, Bundle)}, used in {android.app.Activity#onCreate(Bundle, PersistableBundle)}
      * added in 2.1.0
      *
      * @param recover current Activity or Fragment
@@ -50,7 +52,7 @@ public class SaveHelper {
     }
 
     /**
-     * added while need to save data, used in {@link android.app.Activity#onSaveInstanceState(Bundle)}
+     * added while need to save data, used in {android.app.Activity#onSaveInstanceState(Bundle)}
      *
      * @param save current Activity or Fragment
      * @param outState Bundle
@@ -60,7 +62,7 @@ public class SaveHelper {
 	}
 
     /**
-     * equate to{@link SaveHelper#save(Object, Bundle)}, used in {@link android.app.Activity#onSaveInstanceState(Bundle, PersistableBundle)}
+     * equate to{@link SaveHelper#save(Object, Bundle)}, used in {android.app.Activity#onSaveInstanceState(Bundle, PersistableBundle)}
      * added in 2.1.0
      *
      * @param save current Activity or Fragment
@@ -84,9 +86,14 @@ public class SaveHelper {
 	 */
 	public static <T> void save(T save, SparseArray<Parcelable> container){
         if(container != null){
-            ISaveViewStateHelper<T> viewSaveHelper = findViewSaveHelper(save);
-            if(viewSaveHelper != null){
-                viewSaveHelper.save(save, container);
+            ISaveInstanceStateHelper<T> viewStateHelper = findSaveHelper(save);
+            if(viewStateHelper != null){
+                Bundle bundle = (Bundle) container.get(VIEW_STATE_KEY);
+                if(bundle == null){
+                    bundle = new Bundle();
+                }
+                viewStateHelper.save(bundle, null, save);
+                container.put(VIEW_STATE_KEY, bundle);
             }
         }
 	}
@@ -99,9 +106,12 @@ public class SaveHelper {
      */
     public static <T> void recover(T save, SparseArray<Parcelable> container){
         if(container != null){
-            ISaveViewStateHelper<T> viewSaveHelper = findViewSaveHelper(save);
-            if(viewSaveHelper != null){
-                viewSaveHelper.recover(save, container);
+            ISaveInstanceStateHelper<T> viewStateHelper = findSaveHelper(save);
+            if(viewStateHelper != null){
+                Bundle bundle = (Bundle) container.get(VIEW_STATE_KEY);
+                if(bundle != null){
+                    viewStateHelper.recover(bundle, null, save);
+                }
             }
         }
     }

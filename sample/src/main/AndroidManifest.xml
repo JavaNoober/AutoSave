@@ -10,15 +10,15 @@
         <activity
             android:name=".SampleActivity"
             android:persistableMode="persistAcrossReboots">
-
-        </activity>
-        <activity android:name=".TestActivity"></activity>
-        <activity android:name=".KotlinActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".KotlinActivity">
+
         </activity>
     </application>
 

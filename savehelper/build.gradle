@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '26.0.2'
 
     defaultConfig {
@@ -28,10 +28,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    //    provided 'com.android.support:appcompat-v7:+'
+//    provided 'com.android.support:appcompat-v7:+'
     testImplementation 'junit:junit:4.12'
 }
 

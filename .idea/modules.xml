@@ -3,13 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AutoSave.iml" filepath="$PROJECT_DIR$/.idea/AutoSave.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AutoSave.iml" filepath="$PROJECT_DIR$/AutoSave.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/savehelper/savehelper.iml" filepath="$PROJECT_DIR$/savehelper/savehelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/savehelper-api/savehelper-api.iml" filepath="$PROJECT_DIR$/savehelper-api/savehelper-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/savehelper-processor/savehelper-processor.iml" filepath="$PROJECT_DIR$/savehelper-processor/savehelper-processor.iml" />
-      <module fileurl="file://E:/android-project/AutoSave/savehelper-api/xqauto-api.iml" filepath="E:/android-project/AutoSave/savehelper-api/xqauto-api.iml" />
-      <module fileurl="file://E:/android-project/AutoSave/savehelper/xqauto-savehelper.iml" filepath="E:/android-project/AutoSave/savehelper/xqauto-savehelper.iml" />
     </modules>
   </component>
 </project>

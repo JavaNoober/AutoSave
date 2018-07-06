@@ -4,7 +4,7 @@ apply plugin: 'bintray-release'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.squareup:javapoet:1.8.0'
-    compile project(':savehelper-api')
+    implementation project(':savehelper-api')
 }
 
 sourceCompatibility = "1.7"

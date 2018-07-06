@@ -21,14 +21,14 @@
     2.0.4 修复枚举类型保存的时候不能识别的问题
     
     2.1.0 增加对PersistableBundle的支持,NeedSave注解中设置isPersistable = true则说明该参数保存到PersistableBundle
-
+    2.2.6 增加对自定义view的数据保存以及恢复
 
 引入方式,在app的gradle中加入下面依赖即可：
 
 
-    implementation 'com.noober:savehelper:2.1.0'
-    implementation 'com.noober:savehelper-api:2.1.0'
-    annotationProcessor 'com.noober:processor:2.1.0'
+    implementation 'com.noober:savehelper:2.2.6'
+    implementation 'com.noober:savehelper-api:2.2.6'
+    annotationProcessor 'com.noober:processor:2.2.6'
 
 kotlin的依赖方式
 
@@ -36,9 +36,9 @@ kotlin的依赖方式
     apply plugin: 'kotlin-android-extensions'
     apply plugin: 'kotlin-android'
 
-    implementation 'com.noober:savehelper:2.1.0'
-    kapt 'com.noober:processor:2.1.0'
-    implementation 'com.noober:savehelper-api:2.1.0'
+    implementation 'com.noober:savehelper:2.2.6'
+    kapt 'com.noober:processor:2.2.6'
+    implementation 'com.noober:savehelper-api:2.2.6'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
 混淆配置：
@@ -140,6 +140,43 @@ android 内存被回收是一个开发者的常见问题。当我们**跳转到�
 
 这样就不会因为这种太多的重复的操作去导致代码逻辑的混乱,同时也避免了敲代码时因为key写错导致的错误。
 
+自定义view的变量保存示例：
+
+        public class CustomView extends View {
+        
+            @NeedSave
+            int a;
+        
+            public CustomView(Context context) {
+                super(context);
+            }
+        
+            public CustomView(Context context, @Nullable AttributeSet attrs) {
+                super(context, attrs);
+            }
+        
+        
+            public CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+                super(context, attrs, defStyleAttr);
+            }
+        
+        
+            @Override
+            protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+                SaveHelper.save(this, container);
+                super.dispatchSaveInstanceState(container);
+            }
+        
+            @Override
+            protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+                super.dispatchRestoreInstanceState(container);
+                SaveHelper.recover(this, container);
+            }
+        }
+
+
+重写dispatchSaveInstanceState，dispatchRestoreInstanceState即可。  
+注意SaveHelper.save(this, container)要在super.dispatchSaveInstanceState(container);**之前调用**
 # 效果展示
 我们来看一下测试代码：
 ## 不进行数据保存操作

@@ -78,11 +78,13 @@ public class SampleActivity extends AppCompatActivity {
 //	SecondSExample2 secondSExample2;
 
 
+//    CustomView customView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+//        customView = findViewById(R.id.view);
 		initData();
         Log.e("Sample", i + "");
         if(savedInstanceState != null){

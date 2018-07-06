@@ -26,6 +26,10 @@ allprojects {
             name 'Google'
         }
     }
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+    }
 }
 
 task clean(type: Delete) {
@@ -37,7 +41,7 @@ ext {
     userOrg = 'noober'
     groupId = 'com.noober'
     uploadName = 'AutoSaver'
-    publishVersion = '2.1.1'
+    publishVersion = '2.2.6'
     desc = "A light weight framework can automatically generate 'OnSaveInstanceState' code"
     website = 'https://github.com/JavaNoober/AutoSave'
 //    gradlew clean build bintrayUpload -PbintrayUser=xiaoqiandroid -PbintrayKey=xxxxxxxxxxxxxxxx -PdryRun=false
