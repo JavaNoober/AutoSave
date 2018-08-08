@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'myplugin'
+
 
 android {
     compileSdkVersion 26
@@ -40,5 +42,4 @@ dependencies {
 //    kapt project(':savehelper-processor')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
-
 

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/sample" />
             <option value="$PROJECT_DIR$/savehelper" />
             <option value="$PROJECT_DIR$/savehelper-api" />
+            <option value="$PROJECT_DIR$/savehelper-plugin" />
             <option value="$PROJECT_DIR$/savehelper-processor" />
           </set>
         </option>

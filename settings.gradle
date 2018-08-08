@@ -1,1 +1,1 @@
-include ':savehelper-api', ':savehelper-processor', ':savehelper', ':sample'
+include ':savehelper-api', ':savehelper-processor', ':savehelper', ':sample', ':savehelper-plugin'
