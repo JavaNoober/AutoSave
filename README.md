@@ -25,13 +25,13 @@
     2.1.0 增加对PersistableBundle的支持,NeedSave注解中设置isPersistable = true则说明该参数保存到PersistableBundle
     2.2.6 增加对自定义view的数据保存以及恢复
     3.0.0 增加autosave plugin，省去SaveHelper.save 和 SaveHelper.recover的调用
-    3.0.2 简化引入方式
+    3.0.3 简化引入方式
 
 ## 引入方式  
 在project的gradle加入下面的依赖：
 
     dependencies {
-        classpath 'com.noober.save:plugin:3.0.2'
+        classpath 'com.noober.save:plugin:3.0.3'
     }
 
 在app的gradle或者module的gradle中加入下面插件即可：
