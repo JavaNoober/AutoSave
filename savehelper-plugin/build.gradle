@@ -1,5 +1,6 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'bintray-release'
 
 dependencies {
     compile gradleApi()
@@ -7,17 +8,29 @@ dependencies {
     //groovy sdk
     compile 'com.android.tools.build:gradle:3.0.1'
     compile 'org.javassist:javassist:3.20.0-GA'
+    compile 'org.aspectj:aspectjtools:1.8.13'
 }
 
 repositories {
     jcenter()
 }
 group='com.noober.plugin'
-version='1.0.0'
-uploadArchives{
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../publish'))
-        }
-    }
+version=rootProject.publishVersion
+//uploadArchives{
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('../publish'))
+//        }
+//    }
+//}
+
+//添加
+publish {
+    artifactId = 'plugin'
+    userOrg = rootProject.userOrg
+    groupId = 'com.noober.save'
+    uploadName = rootProject.uploadName
+    publishVersion = rootProject.publishVersion
+    desc = rootProject.description
+    website = rootProject.website
 }

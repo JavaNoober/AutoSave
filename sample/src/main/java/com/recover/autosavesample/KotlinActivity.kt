@@ -24,10 +24,10 @@ class KotlinActivity : AppCompatActivity() {
     }
 
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        Log.e("KotlinActivity",  "onSaveInstanceState")
-        a = 2
-        SaveHelper.save(this,  outState)
-        super.onSaveInstanceState(outState)
-    }
+//    override fun onSaveInstanceState(outState: Bundle?) {
+//        Log.e("KotlinActivity",  "onSaveInstanceState")
+//        a = 2
+//        SaveHelper.save(this,  outState)
+//        super.onSaveInstanceState(outState)
+//    }
 }
