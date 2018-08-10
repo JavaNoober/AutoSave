@@ -16,12 +16,31 @@ class SavePlugin implements Plugin<Project> {
             mavenLocal()
         }
 
-        project.dependencies {
-            implementation 'org.aspectj:aspectjrt:1.8.13'
+//        final def autoSaveVersion = project.rootProject.publishVersion
+        final def autoSaveVersion = '3.0.3'
+        if (project.plugins.hasPlugin('kotlin-android')) {
+            project.dependencies {
+                implementation 'org.aspectj:aspectjrt:1.8.13'
+                implementation "com.noober:savehelper:${autoSaveVersion}"
+                kapt "com.noober:processor:${autoSaveVersion}"
+                implementation "com.noober:savehelper-api:${autoSaveVersion}"
+            }
+        } else {
+            project.dependencies {
+                implementation 'org.aspectj:aspectjrt:1.8.13'
+                implementation "com.noober:savehelper:${autoSaveVersion}"
+                annotationProcessor "com.noober:processor:${autoSaveVersion}"
+                implementation "com.noober:savehelper-api:${autoSaveVersion}"
+            }
         }
 
         final def log = project.logger
-        final def variants = project.android.applicationVariants
+        final def variants
+        if (project.plugins.hasPlugin('com.android.application')) {
+            variants = project.android.applicationVariants
+        } else {
+            variants = project.android.libraryVariants
+        }
 
         variants.all { variant ->
             JavaCompile javaCompile = variant.javaCompile
@@ -43,16 +62,16 @@ class SavePlugin implements Plugin<Project> {
                         case IMessage.ERROR:
                         case IMessage.FAIL:
                             log.error message.message, message.thrown
-                            break;
+                            break
                         case IMessage.WARNING:
                             log.warn message.message, message.thrown
-                            break;
+                            break
                         case IMessage.INFO:
                             log.info message.message, message.thrown
-                            break;
+                            break
                         case IMessage.DEBUG:
                             log.debug message.message, message.thrown
-                            break;
+                            break
                     }
                 }
             }

@@ -3,12 +3,12 @@ apply plugin: 'maven'
 apply plugin: 'bintray-release'
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
+    implementation gradleApi()
+    implementation localGroovy()
     //groovy sdk
-    compile 'com.android.tools.build:gradle:3.0.1'
-    compile 'org.javassist:javassist:3.20.0-GA'
-    compile 'org.aspectj:aspectjtools:1.8.13'
+    implementation 'com.android.tools.build:gradle:3.0.1'
+//    compile 'org.javassist:javassist:3.20.0-GA'
+    implementation 'org.aspectj:aspectjtools:1.8.13'
 }
 
 repositories {

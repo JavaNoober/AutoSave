@@ -2,8 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-apply plugin: 'myplugin'
-
+apply plugin: 'AutoSave'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -33,12 +32,9 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:26.0.1'
 //    testImplementation 'junit:junit:4.12'
-//    implementation 'com.noober:savehelper:2.2.6'
-//    kapt 'com.noober:processor:2.2.6'
-//    implementation 'com.noober:savehelper-api:2.2.6'
-    implementation project(':savehelper')
-    implementation project(':savehelper-api')
-    kapt project(':savehelper-processor')
+//    implementation project(':savehelper')
+//    implementation project(':savehelper-api')
+//    kapt project(':savehelper-processor')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 

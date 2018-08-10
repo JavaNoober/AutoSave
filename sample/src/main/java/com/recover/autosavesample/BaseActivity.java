@@ -20,7 +20,6 @@ public class BaseActivity extends AppCompatActivity {
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		SaveHelper.save(this, outState);
 		super.onSaveInstanceState(outState);
 	}
 }

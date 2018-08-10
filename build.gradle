@@ -19,7 +19,8 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.noober.plugin:savehelper-plugin:1.0.0'
+//        classpath 'com.noober.plugin:savehelper-plugin:3.0.0'
+        classpath 'com.noober.save:plugin:3.0.1-beta'
         classpath 'org.aspectj:aspectjtools:1.8.13'
     }
 }
@@ -47,7 +48,7 @@ ext {
     userOrg = 'noober'
     groupId = 'com.noober'
     uploadName = 'AutoSaver'
-    publishVersion = '3.0.0'
+    publishVersion = '3.0.3'
     desc = "A light weight framework can automatically generate 'OnSaveInstanceState' code"
     website = 'https://github.com/JavaNoober/AutoSave'
 //    gradlew clean build bintrayUpload -PbintrayUser=xiaoqiandroid -PbintrayKey=xxxxxxxxxxxxxxxx -PdryRun=false
