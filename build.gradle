@@ -20,6 +20,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.noober.plugin:savehelper-plugin:1.0.0'
+        classpath 'org.aspectj:aspectjtools:1.8.13'
     }
 }
 
@@ -46,7 +47,7 @@ ext {
     userOrg = 'noober'
     groupId = 'com.noober'
     uploadName = 'AutoSaver'
-    publishVersion = '2.2.6'
+    publishVersion = '3.0.0'
     desc = "A light weight framework can automatically generate 'OnSaveInstanceState' code"
     website = 'https://github.com/JavaNoober/AutoSave'
 //    gradlew clean build bintrayUpload -PbintrayUser=xiaoqiandroid -PbintrayKey=xxxxxxxxxxxxxxxx -PdryRun=false

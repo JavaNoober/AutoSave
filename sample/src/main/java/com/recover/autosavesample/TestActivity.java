@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.noober.api.NeedSave;
+import com.noober.savehelper.SaveHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class TestActivity extends BaseActivity {
 	private Button button;
 	private final static String testContent = "This is a test code:";
 
-//	@NeedSave
+	@NeedSave
 	String testString = "11111111";
 
 	@NeedSave

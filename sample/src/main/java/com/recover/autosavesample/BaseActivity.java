@@ -12,11 +12,11 @@ import com.noober.savehelper.SaveHelper;
 public class BaseActivity extends AppCompatActivity {
 
 
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		SaveHelper.recover(this, savedInstanceState);
-	}
+//	@Override
+//	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//		super.onRestoreInstanceState(savedInstanceState);
+//		SaveHelper.recover(this, savedInstanceState);
+//	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
