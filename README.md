@@ -38,6 +38,13 @@
 
     apply plugin: 'AutoSave'
 
+如果需要支持kotlin：
+
+    apply plugin: 'kotlin-kapt'
+    apply plugin: 'kotlin-android-extensions'
+    apply plugin: 'kotlin-android'
+    apply plugin: 'AutoSave'
+    
 ## 混淆配置：
 
      -dontwarn  com.noober.**
