@@ -6,8 +6,8 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     //groovy sdk
-    implementation 'com.android.tools.build:gradle:3.0.1'
-//    compile 'org.javassist:javassist:3.20.0-GA'
+    implementation 'com.android.tools.build:gradle:3.1.2'
+//    implementation 'org.javassist:javassist:3.20.0-GA'
     implementation 'org.aspectj:aspectjtools:1.8.13'
 }
 
@@ -31,6 +31,6 @@ publish {
     groupId = 'com.noober.save'
     uploadName = rootProject.uploadName
     publishVersion = rootProject.publishVersion
-    desc = rootProject.description
+    desc = rootProject.desc
     website = rootProject.website
 }

@@ -1,4 +1,4 @@
-//package com.noober.plugin
+//package com.noober.plugin.javassist
 //
 //import com.android.build.api.transform.Context
 //import com.android.build.api.transform.DirectoryInput
@@ -77,7 +77,7 @@
 //        classPool.appendClassPath(project.android.bootClasspath[0].toString())
 //        inputs.each { TransformInput input ->
 //            input.directoryInputs.each {DirectoryInput directoryInput ->
-//                SaveInject.inject(directoryInput.file.absolutePath, "com/recover/autosavesample", project, classPool)
+//                SaveInject.inject(directoryInput.file.absolutePath, project)
 //
 //                def filePath = outputProvider.getContentLocation(directoryInput.name,directoryInput.contentTypes,
 //                        directoryInput.scopes, Format.DIRECTORY)

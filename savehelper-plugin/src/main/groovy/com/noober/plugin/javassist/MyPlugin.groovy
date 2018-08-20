@@ -1,4 +1,4 @@
-//package com.noober.plugin
+//package com.noober.plugin.javassist
 //
 //import com.android.build.gradle.AppExtension
 //import org.gradle.api.Action
@@ -12,6 +12,5 @@
 //    void apply(Project project) {
 //        def android = project.getExtensions().findByType(AppExtension);
 //        android.registerTransform(new SaveTransform(project));
-//
 //    }
 //}

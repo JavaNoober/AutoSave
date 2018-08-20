@@ -2,10 +2,14 @@ package com.noober.plugin
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.Classpath
 import org.gradle.api.tasks.compile.JavaCompile
 import org.aspectj.bridge.IMessage
 import org.aspectj.bridge.MessageHandler
 import org.aspectj.tools.ajc.Main
+import org.gradle.testfixtures.ProjectBuilder
+
+import java.nio.file.Paths
 
 
 class SavePlugin implements Plugin<Project> {
@@ -14,10 +18,13 @@ class SavePlugin implements Plugin<Project> {
     void apply(Project project) {
         project.repositories {
             mavenLocal()
+            jcenter()
         }
 
-//        final def autoSaveVersion = project.rootProject.publishVersion
-        final def autoSaveVersion = '3.0.3'
+//        project.dependencies {
+//            implementation 'org.aspectj:aspectjrt:1.8.13'
+//        }
+        final def autoSaveVersion = "3.0.6"
         if (project.plugins.hasPlugin('kotlin-android')) {
             project.dependencies {
                 implementation 'org.aspectj:aspectjrt:1.8.13'
@@ -33,7 +40,6 @@ class SavePlugin implements Plugin<Project> {
                 implementation "com.noober:savehelper-api:${autoSaveVersion}"
             }
         }
-
         final def log = project.logger
         final def variants
         if (project.plugins.hasPlugin('com.android.application')) {

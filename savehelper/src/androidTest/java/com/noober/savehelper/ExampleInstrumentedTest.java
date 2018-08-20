@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
 		// Context of the app under test.
 		Context appContext = InstrumentationRegistry.getTargetContext();
 
-		assertEquals("com.xqand.savehelper.test", appContext.getPackageName());
+		assertEquals("com.noober.savehelper.test", appContext.getPackageName());
 	}
 }
