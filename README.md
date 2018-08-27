@@ -26,24 +26,37 @@
     2.2.6 增加对自定义view的数据保存以及恢复
     3.0.0 增加autosave plugin，省去SaveHelper.save 和 SaveHelper.recover的调用
     3.0.6 简化引入方式
+    3.0.7 添加对kotlin的支持
 
 ## 引入方式  
 在project的gradle加入下面的依赖：
 
     dependencies {
-        classpath 'com.noober.save:plugin:3.0.6'
+        ...
+        classpath 'com.noober.save:plugin:3.0.7'
     }
 
 在app的gradle或者module的gradle中加入下面插件即可：
 
     apply plugin: 'AutoSave'
 
-如果需要支持kotlin：
+如果需要支持kotlin:  
+project的gradle:
 
+    dependencies {
+        ...
+        classpath 'com.noober.save:plugin:3.0.7'
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.2'
+    }
+
+
+在app的gradle或者module的gradle:
+    
     apply plugin: 'kotlin-kapt'
     apply plugin: 'kotlin-android-extensions'
     apply plugin: 'kotlin-android'
     apply plugin: 'AutoSave'
+    apply plugin: 'android-aspectjx'
     
 ## 混淆配置：
 
@@ -62,8 +75,7 @@ _**注意：**_
 1.Activity和Fragment中使用的时候必须重写一下**onSaveInstanceState方法**，或者在父类BaseActivity和BaseFragment
 中**重写一次**即可，否则保存数据的代码会注入失败  
 2.如果想要自己定义内存恢复的位置可以使用**SaveHelper.recover**方法
-3.kotlin使用注意，kotlin暂时还不支持编译期间注入代码，需要自己去写**SaveHelper.recover** **SaveHelper.save**方法
-4.如果要在kotlin使用，与在java中使用相同，直接加注解即可，但是不同之出在于：    
+3.如果要在kotlin使用，与在java中使用相同，直接加注解即可，但是不同之出在于：    
   4.1：如果是基本数据类型，需要多添加一个注解@JvmField
   4.2：如果是其他数据类型，需要增加lateinit关键字或者添加一个注解@JvmField
   否则会报错"the modifier of the field must not be private, otherwise  it won't work"。
@@ -138,7 +150,6 @@ _**注意：**_
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_kotlin)
-            SaveHelper.recover(this, savedInstanceState)
             Log.e("KotlinActivity",  a.toString())
     
         }
@@ -147,7 +158,6 @@ _**注意：**_
         override fun onSaveInstanceState(outState: Bundle?) {
             Log.e("KotlinActivity",  "onSaveInstanceState")
             a = 2
-            SaveHelper.save(this,  outState)
             super.onSaveInstanceState(outState)
         }
     }

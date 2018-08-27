@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-//apply plugin: 'JavasisstPlugin'
+apply plugin: 'AutoSave'
+apply plugin: 'android-aspectjx'
 
 android {
     compileSdkVersion 26

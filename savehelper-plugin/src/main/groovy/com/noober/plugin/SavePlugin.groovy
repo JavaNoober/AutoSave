@@ -24,7 +24,7 @@ class SavePlugin implements Plugin<Project> {
 //        project.dependencies {
 //            implementation 'org.aspectj:aspectjrt:1.8.13'
 //        }
-        final def autoSaveVersion = "3.0.6"
+        final def autoSaveVersion = "3.0.7"
         if (project.plugins.hasPlugin('kotlin-android')) {
             project.dependencies {
                 implementation 'org.aspectj:aspectjrt:1.8.13'
