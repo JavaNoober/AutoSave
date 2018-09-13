@@ -58,6 +58,12 @@ project的gradle:
     apply plugin: 'AutoSave'
     apply plugin: 'android-aspectjx'
     
+    android{
+        ...
+        aspectjx{
+            include "com.noober.savehelper"
+        }
+    }
 ## 混淆配置：
 
      -dontwarn  com.noober.**
@@ -202,4 +208,4 @@ _**注意：**_
 ## 使用注意
 1、如果出现下面的错误，是由aspectj导致的，可以看一下解决[issue](https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx/issues/82)
 
-    java.lang.RuntimeException: Unable to instantiate application
+    java.lang.RuntimeException: Unable to instantiate application xxxxx
