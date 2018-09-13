@@ -199,4 +199,7 @@ _**注意：**_
 ## 具体原理介绍
   
   [**原理介绍**](https://github.com/JavaNoober/AutoSave/blob/master/README-PRINCIPLE.md)
-   
+## 使用注意
+1、如果出现下面的错误，是由aspectj导致的，可以看一下解决[issue](https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx/issues/82)
+
+    java.lang.RuntimeException: Unable to instantiate application
