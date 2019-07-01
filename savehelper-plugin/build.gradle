@@ -16,13 +16,13 @@ repositories {
 }
 group='com.noober.plugin'
 version=rootProject.publishVersion
-//uploadArchives{
-//    repositories {
-//        mavenDeployer {
-//            repository(url: uri('../publish'))
-//        }
-//    }
-//}
+uploadArchives{
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../publish'))
+        }
+    }
+}
 
 //添加
 publish {
