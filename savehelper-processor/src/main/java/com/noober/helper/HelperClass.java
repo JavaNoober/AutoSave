@@ -41,15 +41,16 @@ public class HelperClass {
 
     public JavaFile generateCode() {
         try {
+            //当前所在的class
             TypeName cacheClass = ClassName.get(encloseElement.asType());
-            MethodSpec.Builder saveMethodBuilder = MethodSpec.methodBuilder("save")
-                    .addModifiers(Modifier.PUBLIC)
-                    .returns(void.class)
-                    .addParameter(TypeUtil.BUNDLE, "outState")
-                    .addParameter(TypeUtil.PERSISTABLE_BUNDLE, "outPersistentState")
-                    .addParameter(cacheClass, "save")
-                    .addAnnotation(Override.class)
-                    .beginControlFlow("if(outState != null)");
+            MethodSpec.Builder saveMethodBuilder = MethodSpec.methodBuilder("save")//设置方法名
+                    .addModifiers(Modifier.PUBLIC)//设置public修饰字段
+                    .returns(void.class)//设置方法返回类型
+                    .addParameter(TypeUtil.BUNDLE, "outState")//添加save方法的outState参数
+                    .addParameter(TypeUtil.PERSISTABLE_BUNDLE, "outPersistentState")//添加save方法的outPersistentState参数
+                    .addParameter(cacheClass, "save")//添加save方法的save参数
+                    .addAnnotation(Override.class)//添加Override注解
+                    .beginControlFlow("if(outState != null)");//开始编写save方法内的内容，以if(outState != null)加上"{"开头
 
 
             MethodSpec.Builder recoverMethodBuilder = MethodSpec.methodBuilder("recover")
@@ -63,6 +64,7 @@ public class HelperClass {
 
             int efficientElement = 0;
             ArrayList<HelperSavedValues> persistentArrayList = new ArrayList<>();
+            //遍历这个方法内需要保存的所有字段
             for (HelperSavedValues value : elementArrayList) {
                 //only support public field
                 if (value.isPrivate()) {
@@ -73,9 +75,9 @@ public class HelperClass {
                     persistentArrayList.add(value);
                     continue;
                 }
-                Name fieldName = value.getSimpleName();
-                TypeMirror typeMirror = value.getFieldType();
-                String type = HelperConfig.getBundleFieldType(elementUtils, typeMirror);
+                Name fieldName = value.getSimpleName();//字段名称
+                TypeMirror typeMirror = value.getFieldType();//字段类型
+                String type = HelperConfig.getBundleFieldType(elementUtils, typeMirror);//获取类型的名称
                 efficientElement++;
                 if (!type.equals(HelperConfig.UNKONW)) {
                     if (type.equals("Serializable") || type.equals("ParcelableArray")) {
@@ -87,7 +89,7 @@ public class HelperClass {
                     error("this field is not support yet", value.getEncloseElement());
                 }
             }
-            saveMethodBuilder.endControlFlow();
+            saveMethodBuilder.endControlFlow();//加上"}"结束该方法
             recoverMethodBuilder.endControlFlow();
 
             if (persistentArrayList.size() > 0) {
@@ -118,15 +120,18 @@ public class HelperClass {
                 return null;
             }
 
+            //创建save方法的MethodSpec对象
             MethodSpec saveMethod = saveMethodBuilder.build();
+            //创建recover方法的MethodSpec对象
             MethodSpec recoverMethod = recoverMethodBuilder.build();
             String className = encloseElement.getSimpleName().toString() + HelperConfig.HELP_CLASS;
             TypeSpec cacheClassTypeSpec = TypeSpec.classBuilder(className)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addSuperinterface(ParameterizedTypeName.get(TypeUtil.IHELPER, cacheClass))
-                    .addMethod(saveMethod)
-                    .addMethod(recoverMethod)
-                    .build();
+                    .addModifiers(Modifier.PUBLIC)//增加class的修饰字段
+                    .addSuperinterface(ParameterizedTypeName.get(TypeUtil.IHELPER, cacheClass))//class实现了一个范型接口
+                    .addMethod(saveMethod)//添加save方法
+                    .addMethod(recoverMethod)//添加recover方法
+                    .build();//生成TypeSpec
+            //通过TypeSpec获取javaFile对象，用于生成代码
             JavaFile javaFile = JavaFile.builder(getPackageName(), cacheClassTypeSpec).build();
             return javaFile;
         } catch (Exception e) {

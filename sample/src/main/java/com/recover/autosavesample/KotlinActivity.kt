@@ -18,16 +18,13 @@ class KotlinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin)
-        SaveHelper.recover(this, savedInstanceState)
         Log.e("KotlinActivity",  a.toString())
-
     }
 
 
     override fun onSaveInstanceState(outState: Bundle?) {
         Log.e("KotlinActivity",  "onSaveInstanceState")
         a = 2
-        SaveHelper.save(this,  outState)
         super.onSaveInstanceState(outState)
     }
 }
