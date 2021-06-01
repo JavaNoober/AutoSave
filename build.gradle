@@ -1,39 +1,34 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.4.10'
 
     repositories {
-        jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
         maven {
             url uri('publish')
         }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:4.2.1'
         classpath 'com.novoda:bintray-release:0.8.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.noober.plugin:savehelper-plugin:3.0.7'
-//        classpath 'com.noober.save:plugin:3.0.7'
-        classpath 'org.aspectj:aspectjtools:1.8.13'
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.2'
+//        classpath 'com.noober.plugin:savehelper-plugin:3.0.7'
+        classpath 'com.noober.save:plugin:3.0.7'
+        classpath 'org.aspectj:aspectjtools:1.9.4'
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        google()
     }
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
@@ -50,7 +45,7 @@ ext {
     userOrg = 'noober'
     groupId = 'com.noober'
     uploadName = 'AutoSaver'
-    publishVersion = '3.0.7'
+    publishVersion = '4.0.0'
     desc = "A light weight framework can automatically generate 'OnSaveInstanceState' code"
     website = 'https://github.com/JavaNoober/AutoSave'
 //    gradlew clean build bintrayUpload -PbintrayUser=xiaoqiandroid -PbintrayKey=xxxxxxxxxxxxxxxx -PdryRun=false

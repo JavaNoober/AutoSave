@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+
 apply plugin: 'kotlin-android'
-apply plugin: 'AutoSave'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'AutoSave'
 apply plugin: 'android-aspectjx'
 
 android {
@@ -25,6 +26,10 @@ android {
         }
     }
 
+    aspectjx {
+        include "com.noober.savehelper"
+        exclude 'versions.9'
+    }
 }
 
 
@@ -36,10 +41,10 @@ dependencies {
     })
     implementation 'com.android.support:appcompat-v7:26.0.1'
     testImplementation 'junit:junit:4.12'
-    implementation 'org.aspectj:aspectjrt:1.8.13'
+    implementation 'org.aspectj:aspectjrt:1.9.4'
     implementation project(':savehelper')
     implementation project(':savehelper-api')
     kapt project(':savehelper-processor')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 

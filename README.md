@@ -62,7 +62,9 @@ project的gradle:
         ...
         aspectjx{
             include "com.noober.savehelper"
+            exclude 'versions.9'
         }
+
     }
 ## 混淆配置：
 
