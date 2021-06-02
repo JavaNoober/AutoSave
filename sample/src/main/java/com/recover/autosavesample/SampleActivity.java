@@ -70,8 +70,8 @@ public class SampleActivity extends AppCompatActivity {
     Bundle bundle;
 
 
-	@NeedSave
-	private SecondSExample secondSExample;
+//	@NeedSave
+//	private SecondSExample secondSExample;
 
 //	@NeedSave
 //	SecondSExample2 secondSExample2;

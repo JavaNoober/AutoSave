@@ -3,7 +3,9 @@ import org.aspectj.bridge.MessageHandler
 import org.aspectj.tools.ajc.Main
 
 apply plugin: 'com.android.library'
-apply plugin: 'bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.noober.savehelper'
 
 android {
     compileSdkVersion 27
@@ -27,7 +29,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 dependencies {
@@ -35,7 +36,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compileOnly 'org.aspectj:aspectjrt:1.8.13'
+    compileOnly 'org.aspectj:aspectjrt:1.9.4'
     testImplementation 'junit:junit:4.12'
 }
 
@@ -78,12 +79,12 @@ variants.all { variant ->
 }
 
 //添加
-publish {
-    artifactId = 'savehelper'
-    userOrg = rootProject.userOrg
-    groupId = rootProject.groupId
-    uploadName = rootProject.uploadName
-    publishVersion = rootProject.publishVersion
-    desc = rootProject.desc
-    website = rootProject.website
-}
+//publish {
+//    artifactId = 'savehelper'
+//    userOrg = rootProject.userOrg
+//    groupId = rootProject.groupId
+//    uploadName = rootProject.uploadName
+//    publishVersion = rootProject.publishVersion
+//    desc = rootProject.desc
+//    website = rootProject.website
+//}
