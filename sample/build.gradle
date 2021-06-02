@@ -42,9 +42,14 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.0.1'
     testImplementation 'junit:junit:4.12'
     implementation 'org.aspectj:aspectjrt:1.9.4'
-    implementation project(':savehelper')
-    implementation project(':savehelper-api')
-    kapt project(':savehelper-processor')
+//    implementation project(':savehelper')
+//    implementation project(':savehelper-api')
+//    kapt project(':savehelper-processor')
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+
+    implementation 'com.github.JavaNoober:AutoSave:savehelper:4.0.0'
+    implementation 'com.github.JavaNoober:AutoSave:savehelper-api:4.0.0'
+    kapt 'com.github.JavaNoober:AutoSave:savehelper-processor:4.0.0'
 }
 

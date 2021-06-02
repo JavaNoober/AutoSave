@@ -1,6 +1,8 @@
 apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'bintray-release'
+//apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.noober.savehelper'
 
 dependencies {
     implementation gradleApi()
@@ -14,23 +16,23 @@ dependencies {
 repositories {
     jcenter()
 }
-group='com.noober.plugin'
-version=rootProject.publishVersion
-uploadArchives{
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../publish'))
-        }
-    }
-}
+//group='com.noober.plugin'
+//version=rootProject.publishVersion
+//uploadArchives{
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('../publish'))
+//        }
+//    }
+//}
 
 //添加
-publish {
-    artifactId = 'plugin'
-    userOrg = rootProject.userOrg
-    groupId = 'com.noober.save'
-    uploadName = rootProject.uploadName
-    publishVersion = rootProject.publishVersion
-    desc = rootProject.desc
-    website = rootProject.website
-}
+//publish {
+//    artifactId = 'plugin'
+//    userOrg = rootProject.userOrg
+//    groupId = 'com.noober.save'
+//    uploadName = rootProject.uploadName
+//    publishVersion = rootProject.publishVersion
+//    desc = rootProject.desc
+//    website = rootProject.website
+//}
