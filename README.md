@@ -27,6 +27,7 @@
     3.0.0 增加autosave plugin，省去SaveHelper.save 和 SaveHelper.recover的调用
     3.0.6 简化引入方式
     3.0.7 添加对kotlin的支持
+    4.0.2 迁移至jitpack,支持gradle tools 4.0+
 
 ## 引入方式  
 在project的gradle加入下面的依赖：
