@@ -31,9 +31,19 @@
 ## 引入方式  
 在project的gradle加入下面的依赖：
 
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
+
     dependencies {
         ...
-        classpath 'com.noober.save:plugin:3.0.7'
+        classpath 'com.github.JavaNoober.AutoSave:savehelper-plugin:4.0.2'
     }
 
 在app的gradle或者module的gradle中加入下面插件即可：
@@ -45,8 +55,8 @@ project的gradle:
 
     dependencies {
         ...
-        classpath 'com.noober.save:plugin:3.0.7'
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.2'
+        classpath 'com.github.JavaNoober.AutoSave:savehelper-plugin:4.0.2'
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
     }
 
 

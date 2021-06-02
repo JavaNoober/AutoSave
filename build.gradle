@@ -18,7 +18,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 //        classpath 'com.noober.plugin:savehelper-plugin:3.0.7'
-        classpath 'com.noober.save:plugin:3.0.7'
+        classpath 'com.github.JavaNoober.AutoSave:savehelper-plugin:4.0.2'
         classpath 'org.aspectj:aspectjtools:1.9.4'
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
