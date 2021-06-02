@@ -24,19 +24,19 @@ class SavePlugin implements Plugin<Project> {
 //        project.dependencies {
 //            implementation 'org.aspectj:aspectjrt:1.8.13'
 //        }
-        final def autoSaveVersion = "4.0.0"
+        final def autoSaveVersion = "4.0.2"
         if (project.plugins.hasPlugin('kotlin-android')) {
             project.dependencies {
                 implementation 'org.aspectj:aspectjrt:1.9.4'
                 implementation "com.github.JavaNoober.AutoSave:savehelper:${autoSaveVersion}"
-                kapt "com.github.JavaNoober:processor.AutoSave:savehelper-processor:${autoSaveVersion}"
+                kapt "com.github.JavaNoober.AutoSave:savehelper-processor:${autoSaveVersion}"
                 implementation "com.github.JavaNoober.AutoSave:savehelper-api:${autoSaveVersion}"
             }
         } else {
             project.dependencies {
                 implementation 'org.aspectj:aspectjrt:1.9.4'
                 implementation "com.github.JavaNoober.AutoSave:savehelper:${autoSaveVersion}"
-                annotationProcessor "com.github.JavaNoober:processor.AutoSave:savehelper-processor:${autoSaveVersion}"
+                annotationProcessor "com.github.JavaNoober.AutoSave:savehelper-processor:${autoSaveVersion}"
                 implementation "com.github.JavaNoober.AutoSave:savehelper-api:${autoSaveVersion}"
             }
         }
